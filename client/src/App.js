@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-
 import "./App.css";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Profile from "./components/Profile";
 import AuthServices from "./Services/Services";
+
+import Home from "./components/Home/Home";
 
 class App extends Component {
   constructor(props) {
@@ -75,10 +76,11 @@ class App extends Component {
               path="/signup"
               render={() => <Signup {...this.state.loggedInUser} />}
             />
-            <Route
+            {/* <Route
               render={() => {
                 return <Redirect to="/login" />;
-              }}
+              }} */}
+            <Route exact path="/" component={Home} />
             />
           </Switch>
         </React.Fragment>
