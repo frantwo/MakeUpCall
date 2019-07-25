@@ -90,4 +90,7 @@ app.use("/", index);
 const authRoutes = require("./routes/auth");
 app.use("/auth", authRoutes);
 
+const artistsRoutes = require("./routes/artists");
+app.use("/artists", artistsRoutes);
+
 module.exports = app;

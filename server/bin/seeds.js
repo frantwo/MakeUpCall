@@ -77,6 +77,8 @@ let artistslist = [
   }
 ];
 
+artistslist = Array(8).fill(artistslist[0]);
+
 let servicelist = [
   { name: "Maquillaje de boda" },
   { name: "Maquillaje de fantasía" },

@@ -7,18 +7,14 @@ export default class ArtistCard extends Component {
       <div className="card">
         <img
           className="artist-pict"
-          src="http://farfallahair.com/wp-content/uploads/strikingr/images/3366_Emily-pic-1-369x410.jpg"
-          alt="Avatar"
+          src={this.props.artistPict.photo_url}
+          alt={this.props.artistPict.photo_name}
         />
         <div className="container-card">
           <h4>
-            <b>Jane Doe</b>
+            <b>{this.props.name}</b>
           </h4>
-          <p className="experience">
-            Y hablando de estilos de maquillaje, hoy en día muchas empresas son
-            flexibles en cuanto a este tema, por lo que tenemos un rango
-            bastante
-          </p>
+          <p className="experience">{this.props.experience}</p>
         </div>
       </div>
     );

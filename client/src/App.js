@@ -83,8 +83,8 @@ class App extends Component {
                 <Profile {...this.state.loggedInUser} logout={this.logout} />
               )}
             />
-            <Route exact path="/" component={Home} />
             <Route exact path="/search" component={SearchArtist} />
+            <Route exact path="/" component={Home} />
           </Switch>
         </React.Fragment>
       );
