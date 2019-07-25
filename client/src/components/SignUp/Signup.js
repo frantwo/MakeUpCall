@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import AuthServices from "../../Services/Services";
-import NavBarBeauty from "../BeautyNavBar/BeautyNavBar";
 import "./Signup.css";
 
 export default class Signup extends Component {

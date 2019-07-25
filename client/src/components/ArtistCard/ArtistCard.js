@@ -10,7 +10,7 @@ export default class ArtistCard extends Component {
           src="http://farfallahair.com/wp-content/uploads/strikingr/images/3366_Emily-pic-1-369x410.jpg"
           alt="Avatar"
         />
-        <div className="container">
+        <div className="container-card">
           <h4>
             <b>Jane Doe</b>
           </h4>

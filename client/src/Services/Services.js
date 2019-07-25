@@ -21,7 +21,7 @@ export default class AuthServices {
   };
 
   loggedin = () => {
-    return this.service.get("/userData").then(response => response.data);
+    return this.service.get("/currentuser").then(response => response.data);
   };
 
   logout = () => {

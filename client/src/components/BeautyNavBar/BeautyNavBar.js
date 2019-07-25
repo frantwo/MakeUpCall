@@ -23,16 +23,28 @@ export default class BeautyNavBar extends Component {
             </li>
           </ul>
         </div>
+        {this.props.areyouLogged && (
+          <h1>
+            {this.props.areyouLogged.username} {this.props.areyouLogged.role}
+          </h1>
+        )}
         <div>
           <ul className="navbar-top-right">
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/">
-                <img className="logoutApp" src={logoutApp} alt="logout App" />
-              </Link>
-            </li>
+            {!this.props.areyouLogged && (
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+            )}
+            {this.props.areyouLogged && (
+              <li>
+                <img
+                  className="logoutApp"
+                  src={logoutApp}
+                  alt="logout App"
+                  onClick={() => this.props.logout()}
+                />
+              </li>
+            )}
           </ul>
         </div>
       </section>

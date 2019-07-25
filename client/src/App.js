@@ -5,6 +5,7 @@ import Login from "./components/Login/Login";
 import Signup from "./components/SignUp/Signup";
 import Profile from "./components/ProfileUser/Profile";
 import AuthServices from "./Services/Services";
+import { withRouter } from "react-router";
 
 import Home from "./components/Home/Home";
 import SearchArtist from "./components/SearchArtist/SearchArtist";
@@ -24,19 +25,45 @@ class App extends Component {
   };
 
   logout = e => {
-    e.preventDefault();
     this.service.logout().then(() => {
+      this.props.history.push("/");
+
       this.setState({
         loggedInUser: null
       });
     });
   };
 
+  login = (username, password) => {
+    this.service
+      .login(username, password)
+      .then(response => {
+        this.props.history.push("/profile");
+
+        this.setState({
+          loggedInUser: response
+        });
+      })
+      .catch(error => {
+        this.setState({
+          loggedInUser: null,
+          loginError: error.response.data.message
+        });
+      });
+  };
+
+  componentDidMount() {
+    this.fetchUser();
+  }
+
   fetchUser = () => {
     this.service.loggedin().then(response => {
-      this.setState({
-        loggedInUser: response
-      });
+      if (response.username) {
+        this.setState({
+          loggedInUser: response
+        });
+        this.props.history.push("/profile");
+      }
     });
   };
 
@@ -44,15 +71,11 @@ class App extends Component {
     if (this.state.loggedInUser) {
       return (
         <React.Fragment>
-          <NavBarBeauty {...this.state.loggedInUser} logout={this.logout} />
+          <NavBarBeauty
+            areyouLogged={this.state.loggedInUser}
+            logout={this.logout}
+          />
           <Switch>
-            <Route
-              exact
-              path="/login"
-              render={() => {
-                return <Redirect to="/profile" />;
-              }}
-            />
             <Route
               exact
               path="/profile"
@@ -60,6 +83,8 @@ class App extends Component {
                 <Profile {...this.state.loggedInUser} logout={this.logout} />
               )}
             />
+            <Route exact path="/" component={Home} />
+            <Route exact path="/search" component={SearchArtist} />
           </Switch>
         </React.Fragment>
       );
@@ -72,7 +97,12 @@ class App extends Component {
               exact
               path="/login"
               render={() => (
-                <Login {...this.state.loggedInUser} getUser={this.getTheUser} />
+                <Login
+                  {...this.state.loggedInUser}
+                  getUser={this.getTheUser}
+                  login={this.login}
+                  error={this.state.loginError}
+                />
               )}
             />
             <Route
@@ -91,7 +121,6 @@ class App extends Component {
               )}
             />
             <Route exact path="/" component={Home} />
-            />
           </Switch>
         </React.Fragment>
       );
@@ -99,4 +128,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

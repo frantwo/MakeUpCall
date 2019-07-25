@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import AuthServices from "../../Services/Services";
 import { Link, Redirect } from "react-router-dom";
 import "./Login.css";
-import NavBarBeauty from "../BeautyNavBar/BeautyNavBar";
 
 class Login extends Component {
   constructor(props) {
@@ -13,17 +12,7 @@ class Login extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    const username = this.state.username;
-    const password = this.state.password;
-    debugger;
-    this.service
-      .login(username, password)
-      .then(response => {
-        this.setState({ username: "", password: "" });
-        debugger;
-        this.props.getUser(response);
-      })
-      .catch(error => console.log(error));
+    this.props.login(this.state.username, this.state.password);
   };
 
   handleChange = event => {
@@ -55,6 +44,7 @@ class Login extends Component {
             <button type="submit" form="login-form">
               Login
             </button>
+            {this.props.error && <p className="error">{this.props.error}</p>}
           </form>
           <p>
             Don't have account?

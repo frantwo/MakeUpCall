@@ -15,7 +15,7 @@ img {
   border-radius: 5px 5px 0 0;
 }
 
-.container {
+.container-card {
   display: flex;
   flex-direction: column;
   padding: 2px 16px;
