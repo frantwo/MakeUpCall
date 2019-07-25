@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ListOfCards from "../ListOfCards/ListOfCards";
 import "./SearchArtist.css";
 import Axios from "axios";
+import SearchCity from "../SearchCity/SearchCity";
 
 export default class SearchArtist extends Component {
   constructor() {
@@ -41,11 +42,12 @@ export default class SearchArtist extends Component {
       <React.Fragment>
         <div className="search-wrapper">
           <div className="search-tool">
+            <SearchCity />
             <input
               className="search"
               type="search"
               name="searchBox"
-              placeholder="Search Beer"
+              placeholder="Enter the city"
               onChange={e => this.searchOneArtist(e)}
               value={this.state.filterQuery}
             />
