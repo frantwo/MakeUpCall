@@ -74,7 +74,7 @@ router.get("/logout", (req, res) => {
 });
 
 router.use((err, req, res, next) => {
-  res.status(500).json({ message: "credentials are bad" });
+  res.status(500).json({ message: "Credentials are bad" });
 });
 
 module.exports = router;
