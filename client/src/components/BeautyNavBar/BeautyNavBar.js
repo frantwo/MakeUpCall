@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./BeautyNavBar.css";
 import logoApp from "./logo.png";
+import logoutApp from "./logout.png";
 
 export default class BeautyNavBar extends Component {
   render() {
@@ -23,12 +24,14 @@ export default class BeautyNavBar extends Component {
           </ul>
         </div>
         <div>
-          <ul>
-            <li style={{ float: "right" }}>
-              <Link to="/logout">Logout</Link>
+          <ul className="navbar-top-right">
+            <li>
+              <Link to="/login">Login</Link>
             </li>
-            <li style={{ float: "right" }}>
-              <Link to="/login">login</Link>
+            <li>
+              <Link to="/">
+                <img className="logoutApp" src={logoutApp} alt="logout App" />
+              </Link>
             </li>
           </ul>
         </div>

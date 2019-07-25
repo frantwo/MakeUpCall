@@ -8,7 +8,7 @@ export default class Home extends Component {
     return (
       <React.Fragment>
         <NavBarBeauty />
-        <body className="bodyApp">
+        <div className="bodyApp">
           <img
             className="backgroundPict"
             src={backgroundPict}
@@ -27,7 +27,7 @@ export default class Home extends Component {
             </p>
             <h4>Resize the browser window to see the effect.</h4>
           </div> */}
-        </body>
+        </div>
       </React.Fragment>
     );
   }
