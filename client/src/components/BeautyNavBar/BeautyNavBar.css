@@ -17,7 +17,8 @@
   padding-left: 14px;
 }
 
-.logoutApp {
+.logoutApp,
+.profile-btn {
   width: 40px;
   padding-right: 14px;
 }
@@ -28,6 +29,12 @@ ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+
+li h4 {
+  font-size: 18px;
+  font-weight: normal;
+  margin-right: 10px;
 }
 
 li a {

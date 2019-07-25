@@ -72,7 +72,7 @@ class App extends Component {
       return (
         <React.Fragment>
           <NavBarBeauty
-            areyouLogged={this.state.loggedInUser}
+            infouser={this.state.loggedInUser}
             logout={this.logout}
           />
           <Switch>

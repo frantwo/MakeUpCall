@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./BeautyNavBar.css";
 import logoApp from "./logo.png";
 import logoutApp from "./logout.png";
+import profileBtn from "./profile.png";
 
 export default class BeautyNavBar extends Component {
   render() {
@@ -18,24 +19,36 @@ export default class BeautyNavBar extends Component {
             <li>
               <Link to="/search">Find Artist</Link>
             </li>
-            <li>
-              <Link to="/profiles">Profile</Link>
-            </li>
           </ul>
         </div>
-        {this.props.areyouLogged && (
-          <h1>
-            {this.props.areyouLogged.username} {this.props.areyouLogged.role}
-          </h1>
-        )}
+
         <div>
-          <ul className="navbar-top-right">
-            {!this.props.areyouLogged && (
+          {this.props.infouser && console.log(this.props.infouser.role)}
+          {this.props.infouser && (
+            <ul className="navbar-top-right">
               <li>
-                <Link to="/login">Login</Link>
+                <h4>Welcome {this.props.infouser.username}</h4>
               </li>
-            )}
-            {this.props.areyouLogged && (
+              <li>
+                {this.props.infouser.role === "Artist" && (
+                  <Link to="/profile">
+                    <img
+                      className="profile-btn"
+                      src={profileBtn}
+                      alt="Profile Artist"
+                    />
+                  </Link>
+                )}
+                {this.props.infouser.role === "User" && (
+                  <Link to="/profile">
+                    <img
+                      className="profile-btn"
+                      src={profileBtn}
+                      alt="Profile User"
+                    />
+                  </Link>
+                )}
+              </li>
               <li>
                 <img
                   className="logoutApp"
@@ -44,8 +57,15 @@ export default class BeautyNavBar extends Component {
                   onClick={() => this.props.logout()}
                 />
               </li>
-            )}
-          </ul>
+            </ul>
+          )}
+          {!this.props.infouser && (
+            <ul className="navbar-top-right">
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+            </ul>
+          )}
         </div>
       </section>
     );
