@@ -16,10 +16,10 @@ export default class BeautyNavBar extends Component {
               </Link>
             </li>
             <li>
-              <Link to="/Search">Find Artist</Link>
+              <Link to="/search">Find Artist</Link>
             </li>
             <li>
-              <Link to="/Profiles">Profile</Link>
+              <Link to="/profiles">Profile</Link>
             </li>
           </ul>
         </div>

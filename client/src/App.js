@@ -7,6 +7,8 @@ import Profile from "./components/ProfileUser/Profile";
 import AuthServices from "./Services/Services";
 
 import Home from "./components/Home/Home";
+import SearchArtist from "./components/SearchArtist/SearchArtist";
+import NavBarBeauty from "./components/BeautyNavBar/BeautyNavBar";
 
 class App extends Component {
   constructor(props) {
@@ -42,6 +44,7 @@ class App extends Component {
     if (this.state.loggedInUser) {
       return (
         <React.Fragment>
+          <NavBarBeauty {...this.state.loggedInUser} logout={this.logout} />
           <Switch>
             <Route
               exact
@@ -63,6 +66,7 @@ class App extends Component {
     } else {
       return (
         <React.Fragment>
+          <NavBarBeauty {...this.state.loggedInUser} logout={this.logout} />
           <Switch>
             <Route
               exact
@@ -76,10 +80,16 @@ class App extends Component {
               path="/signup"
               render={() => <Signup {...this.state.loggedInUser} />}
             />
-            {/* <Route
-              render={() => {
-                return <Redirect to="/login" />;
-              }} */}
+            <Route
+              exact
+              path="/search"
+              render={() => (
+                <SearchArtist
+                  {...this.state.loggedInUser}
+                  getUser={this.getTheUser}
+                />
+              )}
+            />
             <Route exact path="/" component={Home} />
             />
           </Switch>

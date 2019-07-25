@@ -37,7 +37,6 @@ export default class Signup extends Component {
   render() {
     return (
       <React.Fragment>
-        <NavBarBeauty />
         <div className="signup-wapper">
           <h1>Welcome to MakeUpCall</h1>
           <form id="signup-form" onSubmit={this.handleFormSubmit}>

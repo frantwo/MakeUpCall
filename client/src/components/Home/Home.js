@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import backgroundPict from "./backgroundPic.png";
 import "./Home.css";
-import NavBarBeauty from "../BeautyNavBar/BeautyNavBar";
 
 export default class Home extends Component {
   render() {
     return (
       <React.Fragment>
-        <NavBarBeauty />
         <div className="bodyApp">
           <img
             className="backgroundPict"

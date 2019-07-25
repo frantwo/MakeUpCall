@@ -34,7 +34,6 @@ class Login extends Component {
   render() {
     return (
       <React.Fragment>
-        <NavBarBeauty />
         <div className="login-wapper">
           <h1>Start Session in MakeUpCall</h1>
           <form id="login-form" onSubmit={this.handleFormSubmit}>

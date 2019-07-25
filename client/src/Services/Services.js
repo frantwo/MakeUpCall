@@ -3,7 +3,7 @@ import Axios from "axios";
 export default class AuthServices {
   constructor() {
     this.service = Axios.create({
-      baseURL: "http://localhost:3000/auth",
+      baseURL: "http://localhost:5000/auth",
       withCredentials: true
     });
   }
