@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
 import { Switch, Route, Redirect } from "react-router-dom";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
-import Profile from "./components/Profile";
+import Login from "./components/Login/Login";
+import Signup from "./components/SignUp/Signup";
+import Profile from "./components/ProfileUser/Profile";
 import AuthServices from "./Services/Services";
 
 import Home from "./components/Home/Home";
