@@ -1,0 +1,20 @@
+.search-wrapper {
+  display: flex;
+}
+
+.search-tool {
+  display: flex;
+  justify-content: center;
+  width: 25%;
+}
+.results-of-search {
+  display: flex;
+  justify-content: center;
+  width: 75%;
+}
+
+.search {
+  font-size: 18px;
+  width: 100%;
+  margin: 10px;
+}

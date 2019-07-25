@@ -6,7 +6,7 @@ export default class ListOfCards extends Component {
   render() {
     return (
       <div className="wrapper-cards">
-        {Array(4)
+        {Array(8)
           .fill()
           .map((one, index) => {
             return (

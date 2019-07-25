@@ -3,5 +3,6 @@
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
-  width: 50vw;
+  margin: 10px;
+  /* width: 50vw; */
 }
