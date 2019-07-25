@@ -1,0 +1,22 @@
+.login-wapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-wapper form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-wapper form button {
+  font-size: 18px;
+}
+
+.login-wapper input {
+  font-size: 18px;
+  margin: 10px;
+}
