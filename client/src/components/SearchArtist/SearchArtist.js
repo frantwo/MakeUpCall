@@ -3,6 +3,7 @@ import ListOfCards from "../ListOfCards/ListOfCards";
 import "./SearchArtist.css";
 import Axios from "axios";
 import SearchCity from "../SearchCity/SearchCity";
+import Popularity from "../Popularity/Popularity";
 
 export default class SearchArtist extends Component {
   constructor() {
@@ -13,18 +14,22 @@ export default class SearchArtist extends Component {
   getAllArtist = () => {
     Axios.get(`http://localhost:5000/artists/list`).then(responseFromApi => {
       this.setState({
-        listOfArtist: responseFromApi.data
+        listOfArtist: responseFromApi.data,
+        filterQuery: ""
       });
     });
   };
 
-  searchOneArtist(e) {
+  filterbyCity(e) {
+    if (e === "anycity") {
+      return this.getAllArtist;
+    }
     const filter = e.target.value;
 
     this.setState({
       filterQuery: filter
     });
-    Axios.get(`http://localhost:5000/search?q=${filter}`).then(
+    Axios.get(`http://localhost:5000/artists/search?q=${filter}`).then(
       responseFromApi => {
         this.setState({
           listOfArtist: responseFromApi.data
@@ -43,7 +48,7 @@ export default class SearchArtist extends Component {
         <div className="search-wrapper">
           <div className="search-tool">
             <h3>FILTER</h3>
-            <SearchCity />
+            <SearchCity onChange={e => this.filterbyCity(e)} />
             {/* <input
               className="search"
               type="search"
@@ -52,6 +57,10 @@ export default class SearchArtist extends Component {
               onChange={e => this.searchOneArtist(e)}
               value={this.state.filterQuery}
             /> */}
+            <div className="popularity">
+              <p>Popularity:</p>
+              <Popularity mode="editable-with-handlers" />
+            </div>
           </div>
           <div className="results-of-search">
             <ListOfCards listofartists={this.state.listOfArtist} />

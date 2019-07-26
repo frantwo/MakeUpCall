@@ -28,7 +28,12 @@ export default class SearchCity extends Component {
   render() {
     return (
       <div>
-        <select id="select">{this.state.cities}</select>
+        <select id="select" onChange={e => this.props.onChange(e)}>
+          <option key={0} value="">
+            Not City
+          </option>
+          {this.state.cities}
+        </select>
       </div>
     );
   }

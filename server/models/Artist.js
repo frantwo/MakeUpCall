@@ -8,8 +8,10 @@ const artistSchema = new Schema(
       { id: { type: Schema.Types.ObjectId, ref: "Services" }, price: Number }
     ],
     experience: String,
-    // areas:[String],
-    pictures: [{ photo_name: String, photo_url: String }]
+    city: String,
+    pictures: [{ photo_name: String, photo_url: String }],
+    comments: [{ id: { type: Schema.Types.ObjectId, ref: "Comments" } }],
+    ranking: Number
   },
   {
     timestamps: {

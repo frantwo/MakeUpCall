@@ -6,8 +6,8 @@ const commentsSchema = new Schema(
     valoration: Number,
     title: String,
     comment: String,
-    user: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    artist: [{ type: Schema.Types.ObjectId, ref: "Artist" }]
+    user: { type: Schema.Types.ObjectId, ref: "User" },
+    artist: { type: Schema.Types.ObjectId, ref: "Artist" }
   },
   {
     timestamps: {
