@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import csc from "country-state-city";
+import "./SearchCity.css";
 
 export default class SearchCity extends Component {
   constructor() {
@@ -7,13 +9,13 @@ export default class SearchCity extends Component {
   }
 
   componentDidMount() {
-    let arr = ["Madrid", "Barcelona"];
+    let SpainID = "205";
+    let spaincities = csc.getStatesOfCountry(SpainID);
     let tmparr = [];
-    for (let cont = 0; cont < arr.length; cont++) {
+    for (let cont = 0; cont < spaincities.length; cont++) {
       tmparr.push(
-        <option key={cont} value={arr[cont]}>
-          {" "}
-          {arr[cont]}{" "}
+        <option key={spaincities[cont].id} value={spaincities[cont].name}>
+          {spaincities[cont].name}
         </option>
       );
     }

@@ -42,15 +42,16 @@ export default class SearchArtist extends Component {
       <React.Fragment>
         <div className="search-wrapper">
           <div className="search-tool">
+            <h3>FILTER</h3>
             <SearchCity />
-            <input
+            {/* <input
               className="search"
               type="search"
               name="searchBox"
               placeholder="Enter the city"
               onChange={e => this.searchOneArtist(e)}
               value={this.state.filterQuery}
-            />
+            /> */}
           </div>
           <div className="results-of-search">
             <ListOfCards listofartists={this.state.listOfArtist} />
