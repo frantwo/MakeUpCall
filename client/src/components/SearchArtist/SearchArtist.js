@@ -39,7 +39,7 @@ export default class SearchArtist extends Component {
 
   citySelected(e) {
     debugger;
-    this.setState({ ...this.state, city: e });
+    this.setState({ ...this.state, city: e.value });
   }
 
   componentDidMount() {
