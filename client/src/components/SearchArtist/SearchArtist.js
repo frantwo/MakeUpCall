@@ -8,7 +8,12 @@ import Popularity from "../Popularity/Popularity";
 export default class SearchArtist extends Component {
   constructor() {
     super();
-    this.state = { listOfArtist: [], filterQuery: "", city: "" };
+    this.state = {
+      listOfArtist: [],
+      filterQuery: "",
+      city: "",
+      popularity: undefined
+    };
   }
 
   getAllArtist = () => {
@@ -16,19 +21,23 @@ export default class SearchArtist extends Component {
       this.setState({
         listOfArtist: responseFromApi.data,
         city: "",
+        popularity: undefined,
         filterQuery: ""
       });
     });
   };
 
   filterResults(e) {
-    console.log("Entrando en filter results: " + this.state.city);
-    if (this.state.city === undefined) {
+    if (
+      (this.state.city === undefined || this.state.city === "") &&
+      (this.state.popularity === undefined || this.state.popularity === 0)
+    ) {
       this.getAllArtist();
     } else {
-      // `http://localhost:5000/artists/search?city=${this.state.city}&ranking=${this.state.ranking}`
       Axios.get(
-        `http://localhost:5000/artists/search?city=${this.state.city}`
+        `http://localhost:5000/artists/search?city=${this.state.city}&ranking=${
+          this.state.popularity
+        }`
       ).then(responseFromApi => {
         this.setState({
           listOfArtist: responseFromApi.data
@@ -37,8 +46,13 @@ export default class SearchArtist extends Component {
     }
   }
 
-  citySelected(e) {
-    this.setState({ ...this.state, city: e.value });
+  citySelected(city) {
+    this.setState({ ...this.state, city: city.value });
+  }
+
+  popularitySelected(value) {
+    console.log("POPULARITY=" + value);
+    this.setState({ ...this.state, popularity: value });
   }
 
   componentDidMount() {
@@ -64,7 +78,11 @@ export default class SearchArtist extends Component {
             /> */}
             <div className="popularity">
               <p>Popularity:</p>
-              <Popularity mode="editable-with-handlers" />
+              <Popularity
+                mode="editable-with-handlers"
+                filterPopularity={e => this.popularitySelected(e)}
+                value={this.state.popularity}
+              />
             </div>
             <button onClick={e => this.filterResults(e)}>SEARCH</button>
           </div>

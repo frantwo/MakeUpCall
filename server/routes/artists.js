@@ -16,7 +16,22 @@ router.get("/list", (req, res, next) => {
 
 router.get("/search", (req, res, next) => {
   let cityArtist = req.query.city;
-  Artist.find({ city: cityArtist })
+  let rankingArtist = req.query.ranking;
+
+  let searchString = {};
+
+  if (cityArtist !== "undefined" && cityArtist) {
+    searchString.city = cityArtist;
+  }
+
+  if (rankingArtist != "undefined" && rankingArtist) {
+    if (rankingArtist !== "0") searchString.ranking = Number(rankingArtist);
+  }
+
+  console.log("SE VA A BUSCAR:");
+  console.log(searchString);
+
+  Artist.find(searchString)
     .populate("profile")
     .populate("services")
     .populate("comments")

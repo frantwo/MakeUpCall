@@ -6,39 +6,21 @@ export default class Popularity extends Component {
     super();
 
     this.state = {
-      rating: 1,
-      rating_half_star: 3.5
+      rating: 1
     };
   }
 
   onStarClick(nextValue, prevValue, name) {
-    console.log(
-      "name: %s, nextValue: %s, prevValue: %s",
-      name,
-      nextValue,
-      prevValue
-    );
+    // console.log(
+    //   "name: %s, nextValue: %s, prevValue: %s",
+    //   name,
+    //   nextValue,
+    //   prevValue
+    // );
+    nextValue = nextValue === 1 && prevValue === 1 ? 0 : nextValue;
+    this.props.filterPopularity(nextValue);
+
     this.setState({ rating: nextValue });
-  }
-
-  onStarClickHalfStar(nextValue, prevValue, name, e) {
-    debugger;
-    const xPos =
-      (e.pageX - e.currentTarget.getBoundingClientRect().left) /
-      e.currentTarget.offsetWidth;
-
-    if (xPos <= 0.5) {
-      nextValue -= 0.5;
-    }
-
-    console.log(
-      "name: %s, nextValue: %s, prevValue: %s",
-      name,
-      nextValue,
-      prevValue
-    );
-    // console.log(e);
-    this.setState({ rating_half_star: nextValue });
   }
 
   render() {
@@ -46,14 +28,11 @@ export default class Popularity extends Component {
       case "editable-with-handlers":
         return (
           <div className="popularity-container">
-            {/* <h3>
-              Editable with handlers (Rating from state is {this.state.rating}):
-            </h3> */}
             <div style={{ fontSize: 20 }}>
               <StarRatingComponent
                 name="app2"
                 starCount={5}
-                value={this.state.rating}
+                value={this.props.value}
                 onStarClick={this.onStarClick.bind(this)}
               />
             </div>
@@ -62,7 +41,6 @@ export default class Popularity extends Component {
       case "noneditable":
         return (
           <div>
-            {/* <h3>Non-Editable:</h3> */}
             <div style={{ fontSize: 30 }}>
               <StarRatingComponent
                 name="app4"
