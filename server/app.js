@@ -93,4 +93,7 @@ app.use("/auth", authRoutes);
 const artistsRoutes = require("./routes/artists");
 app.use("/artists", artistsRoutes);
 
+const servicesRoutes = require("./routes/services");
+app.use("/services", servicesRoutes);
+
 module.exports = app;
