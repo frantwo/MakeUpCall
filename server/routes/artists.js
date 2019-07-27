@@ -15,25 +15,15 @@ router.get("/list", (req, res, next) => {
 });
 
 router.get("/search", (req, res, next) => {
-  let queryString = req.query.q;
-  if (queryString != "") {
-    let artistRegexp = new RegExp(queryString, "g");
-    Artist.find({ city: artistRegexp })
-      .populate("profile")
-      .populate("services")
-      .populate("comments")
-      .then(allArtistByCity => res.json(allArtistByCity));
-  } else {
-    Artist.find({})
-      .populate("profile")
-      .populate("services")
-      .then(artist => {
-        res.json(artist);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
+  let cityArtist = req.query.city;
+  Artist.find({ city: cityArtist })
+    .populate("profile")
+    .populate("services")
+    .populate("comments")
+    .then(allArtistByCity => res.json(allArtistByCity))
+    .catch(err => {
+      console.log(err);
+    });
 });
 
 module.exports = router;

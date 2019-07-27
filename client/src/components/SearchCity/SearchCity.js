@@ -85,6 +85,7 @@ const SpainID = "205";
 let options = csc.getStatesOfCountry(SpainID).map(onecity => {
   return { value: onecity.name, label: onecity.name };
 });
+options.unshift("");
 
 export default class SearchCity extends Component {
   state = {

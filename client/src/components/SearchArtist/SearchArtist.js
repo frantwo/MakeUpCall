@@ -21,24 +21,23 @@ export default class SearchArtist extends Component {
     });
   };
 
-  filterbyCity(e) {
-    // city = e.target.value;
-
-    // this.setState({
-    //   filterQuery: filter
-    // });
-    // `http://localhost:5000/artists/search?city=${this.state.city}&ranking=${this.state.ranking}`
-    Axios.get(
-      `http://localhost:5000/artists/search?city=${this.state.city}`
-    ).then(responseFromApi => {
-      this.setState({
-        listOfArtist: responseFromApi.data
+  filterResults(e) {
+    console.log("Entrando en filter results: " + this.state.city);
+    if (this.state.city === undefined) {
+      this.getAllArtist();
+    } else {
+      // `http://localhost:5000/artists/search?city=${this.state.city}&ranking=${this.state.ranking}`
+      Axios.get(
+        `http://localhost:5000/artists/search?city=${this.state.city}`
+      ).then(responseFromApi => {
+        this.setState({
+          listOfArtist: responseFromApi.data
+        });
       });
-    });
+    }
   }
 
   citySelected(e) {
-    debugger;
     this.setState({ ...this.state, city: e.value });
   }
 
@@ -67,7 +66,7 @@ export default class SearchArtist extends Component {
               <p>Popularity:</p>
               <Popularity mode="editable-with-handlers" />
             </div>
-            <button>SEARCH</button>
+            <button onClick={e => this.filterResults(e)}>SEARCH</button>
           </div>
           <div className="results-of-search">
             <ListOfCards listofartists={this.state.listOfArtist} />
