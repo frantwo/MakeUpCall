@@ -14,7 +14,7 @@ export default class SearchArtist extends Component {
       filterQuery: "",
       city: "",
       popularity: undefined,
-      service: "",
+      service: [],
       listOfServices: []
     };
   }
@@ -34,22 +34,24 @@ export default class SearchArtist extends Component {
         ...this.state,
         listOfServices: [...responseFromApi.data]
       });
-      console.log("HE ACABADO LA LLAMADA A AXIOS DE SERVICIOS!!!!");
-      console.log(this.state.listOfServices);
     });
   };
 
   filterResults(e) {
     if (
       (this.state.city === undefined || this.state.city === "") &&
-      (this.state.popularity === undefined || this.state.popularity === 0)
+      (this.state.popularity === undefined || this.state.popularity === 0) &&
+      (this.state.service === null || this.state.service.length === 0)
     ) {
       this.getAllArtist();
     } else {
+      let serviceString = this.state.service
+        .map(onservice => onservice.value)
+        .join(",");
       Axios.get(
         `http://localhost:5000/artists/search?city=${this.state.city}&ranking=${
           this.state.popularity
-        }`
+        }&services=${serviceString}`
       ).then(responseFromApi => {
         this.setState({
           ...this.state,

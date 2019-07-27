@@ -12,15 +12,12 @@ export default class SearchServices extends Component {
   };
 
   componentDidUpdate() {
-    console.log("componentDidUpdate");
-    console.log(this.props.AllServices);
     options = this.props.AllServices.map(oneservice => {
       return { value: oneservice._id, label: oneservice.name };
     });
   }
 
   render() {
-    console.log("TOY EN RENDER DEL NENE");
     return (
       <Select
         isMulti
