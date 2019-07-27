@@ -4,7 +4,7 @@ import "./SearchArtist.css";
 import Axios from "axios";
 import SearchCity from "../SearchCity/SearchCity";
 import Popularity from "../Popularity/Popularity";
-import SearchServices from "../SeachServices/SearchServices";
+import SearchServices from "../SearchServices/SearchServices";
 
 export default class SearchArtist extends Component {
   constructor() {
