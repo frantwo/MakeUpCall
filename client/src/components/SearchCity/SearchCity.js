@@ -1,35 +1,31 @@
+import Select from "react-select";
 import React, { Component } from "react";
 import csc from "country-state-city";
 import "./SearchCity.css";
 
+const SpainID = "205";
+let options = csc.getStatesOfCountry(SpainID).map(onecity => {
+  return { value: onecity.name, label: onecity.name };
+});
+options.unshift("");
+
 export default class SearchCity extends Component {
-  constructor() {
-    super();
-    this.state = { cities: [] };
-  }
-
-  componentDidMount() {
-    let SpainID = "205";
-    let spaincities = csc.getStatesOfCountry(SpainID);
-    let tmparr = [];
-    for (let cont = 0; cont < spaincities.length; cont++) {
-      tmparr.push(
-        <option key={spaincities[cont].id} value={spaincities[cont].name}>
-          {spaincities[cont].name}
-        </option>
-      );
-    }
-
-    this.setState({
-      cities: [...tmparr]
-    });
-  }
+  state = {
+    selectedOption: null
+  };
+  handleChange = selectedOption => {
+    this.setState({ selectedOption });
+  };
 
   render() {
+    const { selectedOption } = this.props.children; //this.state;
+
     return (
-      <div>
-        <select id="select">{this.state.cities}</select>
-      </div>
+      <Select
+        value={selectedOption}
+        onChange={e => this.props.filterCity(e)}
+        options={options}
+      />
     );
   }
 }

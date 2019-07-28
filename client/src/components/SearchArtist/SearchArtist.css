@@ -28,7 +28,13 @@
   margin-top: 10px;
   margin-bottom: 20px;
 }
-
+.popularity {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 10px;
+  font-size: 18px;
+}
 .results-of-search {
   display: flex;
   justify-content: center;

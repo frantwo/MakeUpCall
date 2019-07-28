@@ -3,38 +3,79 @@ import ListOfCards from "../ListOfCards/ListOfCards";
 import "./SearchArtist.css";
 import Axios from "axios";
 import SearchCity from "../SearchCity/SearchCity";
+import Popularity from "../Popularity/Popularity";
+import SearchServices from "../SearchServices/SearchServices";
 
 export default class SearchArtist extends Component {
   constructor() {
     super();
-    this.state = { listOfArtist: [], filterQuery: "" };
+    this.state = {
+      listOfArtist: [],
+      filterQuery: "",
+      city: "",
+      popularity: undefined,
+      service: [],
+      listOfServices: []
+    };
   }
 
   getAllArtist = () => {
     Axios.get(`http://localhost:5000/artists/list`).then(responseFromApi => {
       this.setState({
+        ...this.state,
         listOfArtist: responseFromApi.data
       });
     });
   };
 
-  searchOneArtist(e) {
-    const filter = e.target.value;
-
-    this.setState({
-      filterQuery: filter
+  getAllServices = () => {
+    Axios.get(`http://localhost:5000/services/list`).then(responseFromApi => {
+      this.setState({
+        ...this.state,
+        listOfServices: [...responseFromApi.data]
+      });
     });
-    Axios.get(`http://localhost:5000/search?q=${filter}`).then(
-      responseFromApi => {
+  };
+
+  filterResults(e) {
+    if (
+      (this.state.city === undefined || this.state.city === "") &&
+      (this.state.popularity === undefined || this.state.popularity === 0) &&
+      (this.state.service === null || this.state.service.length === 0)
+    ) {
+      this.getAllArtist();
+    } else {
+      let serviceString = this.state.service
+        .map(onservice => onservice.value)
+        .join(",");
+      Axios.get(
+        `http://localhost:5000/artists/search?city=${this.state.city}&ranking=${
+          this.state.popularity
+        }&services=${serviceString}`
+      ).then(responseFromApi => {
         this.setState({
+          ...this.state,
           listOfArtist: responseFromApi.data
         });
-      }
-    );
+      });
+    }
+  }
+
+  citySelected(city) {
+    this.setState({ ...this.state, city: city.value });
+  }
+
+  popularitySelected(value) {
+    this.setState({ ...this.state, popularity: value });
+  }
+
+  ServiceSelected(value) {
+    this.setState({ ...this.state, service: value });
   }
 
   componentDidMount() {
     this.getAllArtist();
+    this.getAllServices();
   }
 
   render() {
@@ -43,15 +84,26 @@ export default class SearchArtist extends Component {
         <div className="search-wrapper">
           <div className="search-tool">
             <h3>FILTER</h3>
-            <SearchCity />
-            {/* <input
-              className="search"
-              type="search"
-              name="searchBox"
-              placeholder="Enter the city"
-              onChange={e => this.searchOneArtist(e)}
-              value={this.state.filterQuery}
-            /> */}
+
+            <SearchCity filterCity={e => this.citySelected(e)}>
+              {this.state.city}>
+            </SearchCity>
+
+            <div className="popularity">
+              <p>Popularity:</p>
+              <Popularity
+                mode="editable-with-handlers"
+                filterPopularity={e => this.popularitySelected(e)}
+                value={this.state.popularity}
+              />
+            </div>
+
+            <SearchServices
+              AllServices={this.state.listOfServices}
+              filterService={e => this.ServiceSelected(e)}
+            />
+
+            <button onClick={e => this.filterResults(e)}>SEARCH</button>
           </div>
           <div className="results-of-search">
             <ListOfCards listofartists={this.state.listOfArtist} />

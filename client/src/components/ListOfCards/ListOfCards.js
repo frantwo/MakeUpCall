@@ -13,6 +13,7 @@ export default class ListOfCards extends Component {
               name={oneartist.username}
               artistPict={oneartist.pictures[0]}
               experience={oneartist.experience}
+              services={oneartist.services}
             />
           );
         })}
