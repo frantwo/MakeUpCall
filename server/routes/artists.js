@@ -36,26 +36,33 @@ router.get("/search", (req, res, next) => {
     console.log("arrayservices ANTES DE LA TRANSFORMACIÓN");
     console.log(arrayservices);
 
+    // let elementMatch = {
+    //   $and: [
+    //     {
+    //       "services._id": {
+    //         $in: []
+    //       }
+    //     },
+    //     {
+    //       "services.price": 10
+    //       // "services.price": {
+    //       //   $gt: 50
+    //       // }
+    //     }
+    //   ]
+    // };
+
     let elementMatch = {
       $and: [
-        {
-          "services._id": {
-            $in: []
-          }
-        },
-        {
-          "services.price": 100
-          // "services.price": {
-          //   $gt: 50
-          // }
-        }
+        { "services._id": { $in: [new ObjectId("5d3d55d617728a1e95b9cbf3")] } },
+        { "services.price": 15 }
       ]
     };
-    arrayservices.forEach(element => {
-      return elementMatch["$and"][0]["services._id"]["$in"].push(
-        new ObjectID(element)
-      );
-    });
+
+    // let tmpservices = arrayservices.map(element => new ObjectID(element));
+    // console.log("ESTE ES EL ARRAY DE SERVICES PARA LA CONSULTA SQL");
+    // console.log(tmpservices);
+    // elementMatch["$and"][0]["services._id"]["$in"] = [...tmpservices];
 
     console.log("elementMatch");
     console.log(elementMatch);
@@ -72,7 +79,7 @@ router.get("/search", (req, res, next) => {
   Users.find(searchString)
     .populate("services")
     // .populate("comments")
-    .then(allArtistByCity => res.json(allArtistByCity))
+    .then(allArtistFounded => res.json(allArtistFounded))
     .catch(err => {
       console.log(err);
     });

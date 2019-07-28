@@ -103,7 +103,9 @@ export default class SearchArtist extends Component {
               filterService={e => this.ServiceSelected(e)}
             />
 
-            <button onClick={e => this.filterResults(e)}>SEARCH</button>
+            <button className="btn-search" onClick={e => this.filterResults(e)}>
+              SEARCH
+            </button>
           </div>
           <div className="results-of-search">
             <ListOfCards listofartists={this.state.listOfArtist} />
