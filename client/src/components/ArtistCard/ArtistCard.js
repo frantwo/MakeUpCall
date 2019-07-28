@@ -14,6 +14,13 @@ export default class ArtistCard extends Component {
           <h4>
             <b>{this.props.name}</b>
           </h4>
+          {/* {this.props.services.map((service, index) => {
+            return (
+              <p key={index} className="experience">
+                service.name
+              </p>
+            );
+          })} */}
           <p className="experience">{this.props.experience}</p>
         </div>
       </div>
