@@ -28,19 +28,7 @@ let users = [
     username: "alice",
     password: bcrypt.hashSync("alice", bcrypt.genSaltSync(bcryptSalt)),
     email: "alice@gmail.com",
-    role: "Artist"
-  },
-  {
-    username: "bob",
-    password: bcrypt.hashSync("bob", bcrypt.genSaltSync(bcryptSalt)),
-    email: "bob@gmail.com",
-    role: "User"
-  }
-];
-
-let artistslist = [
-  {
-    profile: "",
+    role: "Artist",
     experience: "Años cortando el pelo",
     services: [],
     areas: [],
@@ -69,22 +57,40 @@ let artistslist = [
         photo_name: "fifth picture",
         photo_url:
           "https://marcasdemaquillaje.com/wp-content/uploads/2018/10/maquillaje-para-novia-perfecto.jpg"
-      },
-
-      ,
-      ,
+      }
     ]
+  },
+  {
+    username: "bob",
+    password: bcrypt.hashSync("bob", bcrypt.genSaltSync(bcryptSalt)),
+    email: "bob@gmail.com",
+    role: "User",
+    experience: "",
+    services: [],
+    areas: [],
+    pictures: []
   }
 ];
 
-artistslist = Array(8).fill(artistslist[0]);
+let userstmp = Array(8).fill(users[0]);
+users = [...users, ...userstmp];
+userstmp = [];
 
 let servicelist = [
   { name: "Maquillaje de boda" },
   { name: "Maquillaje de fantasía" },
   { name: "Sesión de maquillaje" }
 ];
-let servicestmp = [];
+
+let commentslist = [
+  {
+    valoration: 5,
+    title: "una persona muy profesional",
+    comment: "Volveré con ella si vuelvo a tener una boda",
+    user: undefined,
+    artist: undefined
+  }
+];
 
 Services.deleteMany()
   .then(() => {
@@ -94,6 +100,12 @@ Services.deleteMany()
         console.log("Services created sucesfully");
         console.log(servicescreated);
         servicestmp = servicescreated;
+        users = users.map(oneuser => {
+          oneuser.services = servicescreated.map((oneservice, index) => {
+            return { _id: oneservice._id, price: index * 10 };
+          });
+          return oneuser;
+        });
       })
       .then(() => {
         console.log("Starting the creation of users...");
@@ -102,26 +114,23 @@ Services.deleteMany()
             .then(usersCreated => {
               console.log("Users created sucesfully");
               console.log(usersCreated);
-              //update the reference of the user into the artist model (for the population)
-              usersCreated.forEach(u => {
-                if (u.role == "Artist") {
-                  artistslist[0].profile = u._id;
-                  artistslist[0].services = servicestmp.map(oneservice => {
-                    return { _id: oneservice._id, price: 100 };
-                  });
 
-                  // delete artistslist[0].services.name;
-                }
-              });
-              console.log("=============");
-              console.log(artistslist);
+              userstmp = usersCreated.filter(
+                oneuser => oneuser.role === "User"
+              );
+              commentslist[0].user = userstmp[0]._id;
+
+              userstmp = usersCreated.filter(
+                oneuser => oneuser.role === "Artist"
+              );
+              commentslist[0].artist = userstmp[0]._id;
             })
             .then(() => {
-              console.log("Starting the creation of artists");
-              Artist.deleteMany().then(() => {
-                Artist.create(artistslist).then(artistscreated => {
-                  console.log("Artists created sucesfully");
-                  console.log(artistscreated);
+              console.log("Starting the creation of comments");
+              Comments.deleteMany().then(() => {
+                Comments.create(commentslist).then(commentcreated => {
+                  console.log("Comments created sucesfully");
+                  console.log(commentcreated);
 
                   // Close properly the connection to Mongoose
                   mongoose.disconnect();
