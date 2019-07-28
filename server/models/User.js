@@ -13,7 +13,8 @@ const userSchema = new Schema(
     experience: String,
     // areas:[String],
     pictures: [{ photo_name: String, photo_url: String }],
-    ranking: Number
+    ranking: Number,
+    city: String
   },
   {
     timestamps: {

@@ -58,7 +58,9 @@ let users = [
         photo_url:
           "https://marcasdemaquillaje.com/wp-content/uploads/2018/10/maquillaje-para-novia-perfecto.jpg"
       }
-    ]
+    ],
+    ranking: 5,
+    city: "Madrid"
   },
   {
     username: "bob",
@@ -68,7 +70,9 @@ let users = [
     experience: "",
     services: [],
     areas: [],
-    pictures: []
+    pictures: [],
+    ranking: undefined,
+    city: ""
   }
 ];
 
