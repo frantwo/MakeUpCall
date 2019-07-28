@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const Artist = require("../models/Artist");
+const Users = require("../models/User");
 
 router.get("/list", (req, res, next) => {
-  Artist.find({})
-    .populate("profile")
+  Users.find({ role: "Artist" })
     .populate("services")
     .then(artist => {
       res.json(artist);
