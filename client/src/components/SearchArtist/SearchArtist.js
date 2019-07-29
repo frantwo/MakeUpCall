@@ -109,7 +109,6 @@ export default class SearchArtist extends Component {
   }
 
   PriceSelected(value) {
-    console.log(this.state.listOfArtist);
     this.setState({ ...this.state, price: value });
   }
 
