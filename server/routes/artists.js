@@ -41,7 +41,7 @@ router.get("/search", (req, res, next) => {
           }
         },
         {
-          "services.price": 100
+          "services.price": { $gt: 10 }
           // "services.price": {
           //   $gt: 50
           // }
@@ -49,13 +49,11 @@ router.get("/search", (req, res, next) => {
       ]
     };
     arrayservices.forEach(element => {
-      return elementMatch["$and"][0]["services._id"]["$in"].push(
-        new ObjectID(element)
-      );
+      return elementMatch["$and"][0]["services._id"]["$in"].push(element);
     });
 
     console.log("elementMatch");
-    console.log(elementMatch);
+    console.log(JSON.stringify(elementMatch));
     searchString = elementMatch;
   }
 
