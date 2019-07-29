@@ -23,7 +23,9 @@
   width: 100%;
 }
 
-.fields-of-form {
+.fields-of-form,
+.field-service,
+.field-city {
   font-size: 18px;
   width: 95%;
   margin: 10px;

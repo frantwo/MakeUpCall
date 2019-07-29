@@ -18,6 +18,7 @@ export default class SearchServices extends Component {
   render() {
     return (
       <Select
+        className="select-field"
         isMulti
         onChange={e => this.props.filterService(e)}
         options={this.state.options}
