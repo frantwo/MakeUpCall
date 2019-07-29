@@ -1,13 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const Artist = require("../models/Artist");
+const User = require("../models/User");
 const ObjectID = require("mongodb").ObjectID;
 // const mongo = require('mongodb'),
 // var ObjectID = mongo.ObjectID;
 
 router.get("/list", (req, res, next) => {
-  Artist.find({})
-    .populate("profile")
+  User.find({})
     .populate("services")
     .then(artist => {
       res.json(artist);
@@ -18,22 +17,19 @@ router.get("/list", (req, res, next) => {
 });
 
 router.get("/search", (req, res, next) => {
-  let cityArtist = req.query.city;
-  let rankingArtist = req.query.ranking;
-  let servicesArtist = req.query.services;
-
   let searchString = {};
 
-  if (cityArtist !== "undefined" && cityArtist) {
-    searchString.city = cityArtist;
+  if (req.query.city) {
+    searchString.city = req.query.city;
   }
 
-  if (rankingArtist != "undefined" && rankingArtist) {
-    if (rankingArtist !== "0") searchString.ranking = Number(rankingArtist);
+  if (req.query.ranking) {
+    if (req.query.ranking !== "0")
+      searchString.ranking = Number(req.query.ranking);
   }
 
-  if (servicesArtist != "undefined" && servicesArtist) {
-    let arrayservices = servicesArtist.split(",");
+  if (req.query.services) {
+    let arrayservices = req.query.services.split(",");
     console.log("arrayservices ANTES DE LA TRANSFORMACIÓN");
     console.log(arrayservices);
 
@@ -70,11 +66,10 @@ router.get("/search", (req, res, next) => {
   console.log("SE VA A BUSCAR:");
   console.log(searchString);
 
-  Artist.find(searchString)
-    .populate("profile")
+  User.find(searchString)
     .populate("services")
-    .populate("comments")
-    .then(allArtistByCity => res.json(allArtistByCity))
+    // .populate("comments")
+    .then(allArtistsFiltered => res.json(allArtistsFiltered))
     .catch(err => {
       console.log(err);
     });

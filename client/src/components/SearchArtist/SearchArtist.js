@@ -38,21 +38,44 @@ export default class SearchArtist extends Component {
   };
 
   filterResults(e) {
-    if (
-      (this.state.city === undefined || this.state.city === "") &&
-      (this.state.popularity === undefined || this.state.popularity === 0) &&
-      (this.state.service === null || this.state.service.length === 0)
-    ) {
+    console.log("this.state.city");
+    console.log(this.state.city);
+    let filterByCity = this.state.city !== undefined && this.state.city !== "";
+    let filterByPopularity =
+      this.state.popularity !== undefined && this.state.popularity !== 0;
+    let filterByService =
+      this.state.service !== null && this.state.service.length !== 0;
+
+    console.log("filterByCity");
+    console.log(filterByCity);
+
+    if (!filterByCity && !filterByPopularity && !filterByService) {
       this.getAllArtist();
     } else {
-      let serviceString = this.state.service
-        .map(onservice => onservice.value)
-        .join(",");
-      Axios.get(
-        `http://localhost:5000/artists/search?city=${this.state.city}&ranking=${
-          this.state.popularity
-        }&services=${serviceString}`
-      ).then(responseFromApi => {
+      let baseURL = `http://localhost:5000/artists/search?`;
+      let queryString = "";
+      if (filterByCity) {
+        queryString = queryString + `&city=${this.state.city}`;
+      }
+
+      if (filterByPopularity) {
+        queryString = queryString + `&ranking=${this.state.popularity}`;
+      }
+
+      if (filterByService) {
+        let serviceString = this.state.service
+          .map(onservice => onservice.value)
+          .join(",");
+        queryString = queryString + `&services=${serviceString}`;
+      }
+
+      queryString = queryString.substring(1, queryString.length);
+      console.log("FILTER RESULTS CONSULTA ENVIADA A LA API");
+      console.log(queryString);
+
+      Axios.get(baseURL + queryString).then(responseFromApi => {
+        console.log("VALORES DEVUELTOS DE LA API SEARCH");
+        console.log(responseFromApi);
         this.setState({
           ...this.state,
           listOfArtist: responseFromApi.data

@@ -5,11 +5,11 @@ export default class ArtistCard extends Component {
   render() {
     return (
       <div className="card">
-        <img
+        {/* <img
           className="artist-pict"
           src={this.props.artistPict.photo_url}
           alt={this.props.artistPict.photo_name}
-        />
+        /> */}
         <div className="container-card">
           <h4>
             <b>{this.props.name}</b>
