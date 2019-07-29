@@ -48,7 +48,7 @@ export default class SearchArtist extends Component {
     let filterByService =
       this.state.service !== null && this.state.service.length !== 0;
 
-    let filterByPrice = this.state.price !== null && this.state.price;
+    // let filterByPrice = this.state.price !== null && this.state.price;
 
     console.log("filterByCity");
     console.log(filterByCity);
@@ -56,8 +56,8 @@ export default class SearchArtist extends Component {
     if (
       !filterByCity &&
       !filterByPopularity &&
-      !filterByService &&
-      !filterByPrice
+      !filterByService //&&
+      // !filterByPrice
     ) {
       this.getAllArtist();
     } else {
@@ -77,9 +77,9 @@ export default class SearchArtist extends Component {
           .join(",");
         queryString = queryString + `&services=${serviceString}`;
       }
-      if (filterByPrice) {
-        queryString = queryString + `&price=${this.state.price}`;
-      }
+      // if (filterByPrice) {
+      //   queryString = queryString + `&price=${this.state.price}`;
+      // }
 
       queryString = queryString.substring(1, queryString.length);
       console.log("FILTER RESULTS CONSULTA ENVIADA A LA API");
@@ -109,6 +109,7 @@ export default class SearchArtist extends Component {
   }
 
   PriceSelected(value) {
+    console.log(this.state.listOfArtist);
     this.setState({ ...this.state, price: value });
   }
 

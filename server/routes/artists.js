@@ -7,7 +7,7 @@ const ObjectID = require("mongodb").ObjectID;
 
 router.get("/list", (req, res, next) => {
   User.find({})
-    .populate("services")
+    .populate("Services")
     .then(artist => {
       res.json(artist);
     })
@@ -65,7 +65,7 @@ router.get("/search", (req, res, next) => {
   console.log(searchString);
 
   User.find(searchString)
-    .populate("services")
+    .populate("Services")
     // .populate("comments")
     .then(allArtistsFiltered => res.json(allArtistsFiltered))
     .catch(err => {
