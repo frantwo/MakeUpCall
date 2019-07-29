@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const Users = require("../models/User");
+const User = require("../models/User");
 const ObjectID = require("mongodb").ObjectID;
 // const mongo = require('mongodb'),
 // var ObjectID = mongo.ObjectID;
 
 router.get("/list", (req, res, next) => {
-  Users.find({ role: "Artist" })
-    .populate("services")
+  User.find({})
+    .populate("Services")
     .then(artist => {
       res.json(artist);
     })
@@ -17,22 +17,19 @@ router.get("/list", (req, res, next) => {
 });
 
 router.get("/search", (req, res, next) => {
-  let cityArtist = req.query.city;
-  let rankingArtist = req.query.ranking;
-  let servicesArtist = req.query.services;
-
   let searchString = {};
 
-  if (cityArtist !== "undefined" && cityArtist) {
-    searchString.city = cityArtist;
+  if (req.query.city) {
+    searchString.city = req.query.city;
   }
 
-  if (rankingArtist != "undefined" && rankingArtist) {
-    if (rankingArtist !== "0") searchString.ranking = Number(rankingArtist);
+  if (req.query.ranking) {
+    if (req.query.ranking !== "0")
+      searchString.ranking = Number(req.query.ranking);
   }
 
-  if (servicesArtist != "undefined" && servicesArtist) {
-    let arrayservices = servicesArtist.split(",");
+  if (req.query.services) {
+    let arrayservices = req.query.services.split(",");
     console.log("arrayservices ANTES DE LA TRANSFORMACIÓN");
     console.log(arrayservices);
 
@@ -54,18 +51,25 @@ router.get("/search", (req, res, next) => {
 
     let elementMatch = {
       $and: [
-        { "services._id": { $in: [new ObjectId("5d3d55d617728a1e95b9cbf3")] } },
-        { "services.price": 15 }
+        {
+          "services._id": {
+            $in: []
+          }
+        }
+        // {
+        //   "services.price": { $gt: 10 }
+        //   // "services.price": {
+        //   //   $gt: 50
+        //   // }
+        // }
       ]
     };
-
-    // let tmpservices = arrayservices.map(element => new ObjectID(element));
-    // console.log("ESTE ES EL ARRAY DE SERVICES PARA LA CONSULTA SQL");
-    // console.log(tmpservices);
-    // elementMatch["$and"][0]["services._id"]["$in"] = [...tmpservices];
+    arrayservices.forEach(element => {
+      return elementMatch["$and"][0]["services._id"]["$in"].push(element);
+    });
 
     console.log("elementMatch");
-    console.log(elementMatch);
+    console.log(JSON.stringify(elementMatch));
     searchString = elementMatch;
   }
 
@@ -76,10 +80,10 @@ router.get("/search", (req, res, next) => {
   console.log("SE VA A BUSCAR:");
   console.log(searchString);
 
-  Users.find(searchString)
-    .populate("services")
+  User.find(searchString)
+    .populate("Services")
     // .populate("comments")
-    .then(allArtistFounded => res.json(allArtistFounded))
+    .then(allArtistsFiltered => res.json(allArtistsFiltered))
     .catch(err => {
       console.log(err);
     });
