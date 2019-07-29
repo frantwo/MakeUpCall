@@ -6,6 +6,7 @@
   align-content: center;
   width: 100vw;
 }
+
 .form-wrapper {
   display: flex;
   flex-direction: column;
@@ -22,9 +23,11 @@
   width: 100%;
 }
 
-.fieldset-wrapper input {
+.fields-of-form {
   font-size: 18px;
-  width: 100%;
+  width: 95%;
+  margin: 10px;
+  padding: 5px;
 }
 
 .form-wrapper button {
