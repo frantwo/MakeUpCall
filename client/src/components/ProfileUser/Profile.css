@@ -1,0 +1,33 @@
+.profile-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 100vw;
+}
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+.fieldset-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.fieldset-wrapper input {
+  font-size: 18px;
+  width: 100%;
+}
+
+.form-wrapper button {
+  font-size: 18px;
+  margin: 10px;
+}

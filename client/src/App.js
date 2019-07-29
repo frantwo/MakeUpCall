@@ -67,6 +67,11 @@ class App extends Component {
     });
   };
 
+  updateUserHandler = useUpdated => {
+    console.log("AHORA ACTUALIZA LOS DATOS EN EL SERVIDOR!!!");
+    console.log(useUpdated);
+  };
+
   render() {
     if (this.state.loggedInUser) {
       return (
@@ -80,7 +85,11 @@ class App extends Component {
               exact
               path="/profile"
               render={() => (
-                <Profile {...this.state.loggedInUser} logout={this.logout} />
+                <Profile
+                  {...this.state.loggedInUser}
+                  logout={this.logout}
+                  updateUserHandler={e => this.updateUserHandler(e)}
+                />
               )}
             />
             <Route exact path="/search" component={SearchArtist} />
