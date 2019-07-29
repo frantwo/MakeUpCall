@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./Profile.css";
 import SearchCity from "../SearchCity/SearchCity";
+import SearchServices from "../SearchServices/SearchServices";
+import Axios from "axios";
 
 export default class Profile extends Component {
   constructor() {
@@ -10,20 +12,34 @@ export default class Profile extends Component {
       userFormDetails: {
         username: "",
         password: "",
+        email: "",
         services: [],
         experience: "",
-        city: ""
+        city: "",
+        listOfServices: [],
+        service: []
       }
     };
   }
 
+  getAllServices = () => {
+    Axios.get(`http://localhost:5000/services/list`).then(responseFromApi => {
+      this.setState({
+        ...this.state,
+        listOfServices: [...responseFromApi.data]
+      });
+    });
+  };
+
   componentDidMount() {
+    this.getAllServices();
     this.setState({
       ...this.state,
       userFormDetails: {
         ...this.state.userFormDetails,
         username: this.props.username,
-        // password: "",
+        password: "",
+        email: this.props.email,
         // services: [],
         experience: this.props.experience,
         city: this.props.city
@@ -49,6 +65,9 @@ export default class Profile extends Component {
   citySelected(city) {
     this.setState({ ...this.state, city: city.value });
   }
+  ServiceSelected(value) {
+    this.setState({ ...this.state, service: value });
+  }
 
   render() {
     return (
@@ -65,6 +84,13 @@ export default class Profile extends Component {
             />
             <input
               className="fields-of-form"
+              type="text"
+              placeholder="please write your email"
+              value={this.state.userFormDetails.email}
+              onChange={e => this.handleFormChange(e, "email")}
+            />
+            <input
+              className="fields-of-form"
               type="password"
               placeholder="please write your password"
               value={this.state.userFormDetails.password}
@@ -77,18 +103,18 @@ export default class Profile extends Component {
               value={this.state.userFormDetails.experience}
               onChange={e => this.handleFormChange(e, "experience")}
             />
-            {/* <input
-              type="text"
-              placeholder="please write your city"
-              value={this.state.userFormDetails.age}
-              onChange={e => this.handleFormChange(e, "city")}
-            /> */}
+
             <SearchCity
               className="fields-of-form"
               filterCity={e => this.citySelected(e)}
             >
               {this.state.city}>
             </SearchCity>
+
+            <SearchServices
+              AllServices={this.state.listOfServices}
+              filterService={e => this.ServiceSelected(e)}
+            />
           </fieldset>
           <button onClick={e => this.submitForm(e)}>Submit this form!</button>
         </form>
