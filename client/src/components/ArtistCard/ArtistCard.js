@@ -27,3 +27,49 @@ export default class ArtistCard extends Component {
     );
   }
 }
+
+// import React, { Component } from "react";
+// import "./ArtistCard.css";
+
+// export default class ArtistCard extends Component {
+//   state = {
+//     photoUrl: "",
+//     photoName: "",
+//     name: "",
+//     experience: ""
+//   };
+
+//   static getDerivedStateFromProps(nextProps, prevState) {
+//     return {
+//       photoUrl: nextProps.artistPict.photoUrl,
+//       photoName: nextProps.artistPict.photoName,
+//       name: nextProps.artistPict.name,
+//       experience: nextProps.artistPict.experience
+//     };
+//   }
+
+//   render() {
+//     return (
+//       <div className="card">
+//         <img
+//           className="artist-pict"
+//           src={this.state.photoUrl}
+//           alt={this.state.photoName}
+//         />
+//         <div className="container-card">
+//           <h4>
+//             <b>{this.state.name}</b>
+//           </h4>
+//           {/* {this.props.services.map((service, index) => {
+//             return (
+//               <p key={index} className="experience">
+//                 service.name
+//               </p>
+//             );
+//           })} */}
+//           <p className="experience">{this.state.experience}</p>
+//         </div>
+//       </div>
+//     );
+//   }
+// }

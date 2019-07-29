@@ -12,7 +12,7 @@ export default class SearchArtist extends Component {
     super();
     this.state = {
       listOfArtist: [],
-      filterQuery: "",
+      // filterQuery: "",
       city: "",
       popularity: undefined,
       service: [],
@@ -109,6 +109,7 @@ export default class SearchArtist extends Component {
   }
 
   PriceSelected(value) {
+    console.log(this.state.listOfArtist);
     this.setState({ ...this.state, price: value });
   }
 

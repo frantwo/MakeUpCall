@@ -7,6 +7,8 @@ export default class ListOfCards extends Component {
     return (
       <div className="wrapper-cards">
         {this.props.listofartists.map((oneartist, index) => {
+          console.log("ESTO ES LO QUE VA AL ARTIST CARD");
+          console.log(oneartist);
           return (
             <ArtistCard
               key={index}
