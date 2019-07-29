@@ -6,7 +6,15 @@ const userSchema = new Schema(
     username: String,
     password: String,
     email: String,
-    role: { type: String, enum: ["User", "Artist"] }
+    role: { type: String, enum: ["User", "Artist"] },
+    services: [
+      { id: { type: Schema.Types.ObjectId, ref: "Services" }, price: Number }
+    ],
+    experience: String,
+    // areas:[String],
+    pictures: [{ photo_name: String, photo_url: String }],
+    ranking: Number,
+    city: String
   },
   {
     timestamps: {
