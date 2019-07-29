@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
+const bcrypt = require("bcrypt");
 const ObjectID = require("mongodb").ObjectID;
 // const mongo = require('mongodb'),
 // var ObjectID = mongo.ObjectID;
@@ -39,13 +40,12 @@ router.delete("/delete/:artistID", (req, res) => {
 });
 
 router.put("/update", (req, res, next) => {
-  console.log("END POINT DE UPDATE!!!");
-  console.log(req.body);
-  console.log(req.body.username);
+  const salt = bcrypt.genSaltSync(10);
+  const hashPass = bcrypt.hashSync(req.body.password, salt);
 
   User.findByIdAndUpdate(req.body._id, {
     username: req.body.username,
-    // password: req.body.password,
+    password: hashPass,
     email: req.body.email,
     // services: req.body.services,
     experience: req.body.experience
