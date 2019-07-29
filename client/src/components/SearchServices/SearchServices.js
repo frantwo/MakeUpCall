@@ -23,6 +23,7 @@ export default class SearchServices extends Component {
         isMulti
         onChange={e => this.props.filterService(e)}
         options={options}
+        placeholder="Select the services"
       />
     );
   }

@@ -5,6 +5,7 @@ import Axios from "axios";
 import SearchCity from "../SearchCity/SearchCity";
 import Popularity from "../Popularity/Popularity";
 import SearchServices from "../SearchServices/SearchServices";
+import Price from "../Price/Price";
 
 export default class SearchArtist extends Component {
   constructor() {
@@ -15,7 +16,8 @@ export default class SearchArtist extends Component {
       city: "",
       popularity: undefined,
       service: [],
-      listOfServices: []
+      listOfServices: [],
+      price: 0
     };
   }
 
@@ -46,10 +48,17 @@ export default class SearchArtist extends Component {
     let filterByService =
       this.state.service !== null && this.state.service.length !== 0;
 
+    let filterByPrice = this.state.price !== null && this.state.price;
+
     console.log("filterByCity");
     console.log(filterByCity);
 
-    if (!filterByCity && !filterByPopularity && !filterByService) {
+    if (
+      !filterByCity &&
+      !filterByPopularity &&
+      !filterByService &&
+      !filterByPrice
+    ) {
       this.getAllArtist();
     } else {
       let baseURL = `http://localhost:5000/artists/search?`;
@@ -67,6 +76,9 @@ export default class SearchArtist extends Component {
           .map(onservice => onservice.value)
           .join(",");
         queryString = queryString + `&services=${serviceString}`;
+      }
+      if (filterByPrice) {
+        queryString = queryString + `&price=${this.state.price}`;
       }
 
       queryString = queryString.substring(1, queryString.length);
@@ -96,6 +108,10 @@ export default class SearchArtist extends Component {
     this.setState({ ...this.state, service: value });
   }
 
+  PriceSelected(value) {
+    this.setState({ ...this.state, price: value });
+  }
+
   componentDidMount() {
     this.getAllArtist();
     this.getAllServices();
@@ -107,11 +123,9 @@ export default class SearchArtist extends Component {
         <div className="search-wrapper">
           <div className="search-tool">
             <h3>FILTER</h3>
-
             <SearchCity filterCity={e => this.citySelected(e)}>
               {this.state.city}>
             </SearchCity>
-
             <div className="popularity">
               <p>Popularity:</p>
               <Popularity
@@ -120,13 +134,17 @@ export default class SearchArtist extends Component {
                 value={this.state.popularity}
               />
             </div>
-
             <SearchServices
               AllServices={this.state.listOfServices}
               filterService={e => this.ServiceSelected(e)}
             />
-
             <button onClick={e => this.filterResults(e)}>SEARCH</button>
+
+            <div className="order-by-price" />
+            <Price
+              filterPrice={e => this.PriceSelected(e)}
+              value={this.props.price}
+            />
           </div>
           <div className="results-of-search">
             <ListOfCards listofartists={this.state.listOfArtist} />
