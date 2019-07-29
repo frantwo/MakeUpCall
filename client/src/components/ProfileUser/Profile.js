@@ -14,6 +14,7 @@ export default class Profile extends Component {
           password={this.props.password}
           experience={this.props.experience}
           updateUserHandler={newArtist => this.updateUser(newArtist)}
+          logout={this.props.logout}
         />
       </div>
     );

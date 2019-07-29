@@ -65,6 +65,7 @@ export default class Profile extends Component {
     Axios.delete("http://localhost:5000/artists/delete/" + currentUserId).then(
       deletedInfo => {
         console.log(deletedInfo);
+        this.props.logout();
       }
     );
   }
