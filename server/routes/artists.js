@@ -39,13 +39,13 @@ router.get("/search", (req, res, next) => {
           "services._id": {
             $in: []
           }
-        },
-        {
-          "services.price": { $gt: 10 }
-          // "services.price": {
-          //   $gt: 50
-          // }
         }
+        // {
+        //   "services.price": { $gt: 10 }
+        //   // "services.price": {
+        //   //   $gt: 50
+        //   // }
+        // }
       ]
     };
     arrayservices.forEach(element => {
