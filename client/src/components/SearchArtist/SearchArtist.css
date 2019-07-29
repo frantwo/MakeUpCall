@@ -1,5 +1,7 @@
 .search-wrapper {
   display: flex;
+  height: 100vh;
+  width: 100vw;
 }
 
 .search-tool {
@@ -7,7 +9,7 @@
   flex-direction: column;
   /* justify-content: center; */
   width: 25%;
-
+  height: 50%;
   /* font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;  */
   color: #333;
   font-size: 18px;
@@ -41,8 +43,7 @@
   width: 75%;
 }
 
-.btn-search {
+.search-tool button {
   font-size: 18px;
-  width: 100%;
   margin: 10px;
 }

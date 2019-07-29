@@ -5,17 +5,19 @@ import Axios from "axios";
 import SearchCity from "../SearchCity/SearchCity";
 import Popularity from "../Popularity/Popularity";
 import SearchServices from "../SearchServices/SearchServices";
+import Price from "../Price/Price";
 
 export default class SearchArtist extends Component {
   constructor() {
     super();
     this.state = {
       listOfArtist: [],
-      filterQuery: "",
+      // filterQuery: "",
       city: "",
       popularity: undefined,
       service: [],
-      listOfServices: []
+      listOfServices: [],
+      price: 0
     };
   }
 
@@ -38,21 +40,54 @@ export default class SearchArtist extends Component {
   };
 
   filterResults(e) {
+    console.log("this.state.city");
+    console.log(this.state.city);
+    let filterByCity = this.state.city !== undefined && this.state.city !== "";
+    let filterByPopularity =
+      this.state.popularity !== undefined && this.state.popularity !== 0;
+    let filterByService =
+      this.state.service !== null && this.state.service.length !== 0;
+
+    // let filterByPrice = this.state.price !== null && this.state.price;
+
+    console.log("filterByCity");
+    console.log(filterByCity);
+
     if (
-      (this.state.city === undefined || this.state.city === "") &&
-      (this.state.popularity === undefined || this.state.popularity === 0) &&
-      (this.state.service === null || this.state.service.length === 0)
+      !filterByCity &&
+      !filterByPopularity &&
+      !filterByService //&&
+      // !filterByPrice
     ) {
       this.getAllArtist();
     } else {
-      let serviceString = this.state.service
-        .map(onservice => onservice.value)
-        .join(",");
-      Axios.get(
-        `http://localhost:5000/artists/search?city=${this.state.city}&ranking=${
-          this.state.popularity
-        }&services=${serviceString}`
-      ).then(responseFromApi => {
+      let baseURL = `http://localhost:5000/artists/search?`;
+      let queryString = "";
+      if (filterByCity) {
+        queryString = queryString + `&city=${this.state.city}`;
+      }
+
+      if (filterByPopularity) {
+        queryString = queryString + `&ranking=${this.state.popularity}`;
+      }
+
+      if (filterByService) {
+        let serviceString = this.state.service
+          .map(onservice => onservice.value)
+          .join(",");
+        queryString = queryString + `&services=${serviceString}`;
+      }
+      // if (filterByPrice) {
+      //   queryString = queryString + `&price=${this.state.price}`;
+      // }
+
+      queryString = queryString.substring(1, queryString.length);
+      console.log("FILTER RESULTS CONSULTA ENVIADA A LA API");
+      console.log(queryString);
+
+      Axios.get(baseURL + queryString).then(responseFromApi => {
+        console.log("VALORES DEVUELTOS DE LA API SEARCH");
+        console.log(responseFromApi);
         this.setState({
           ...this.state,
           listOfArtist: responseFromApi.data
@@ -73,6 +108,11 @@ export default class SearchArtist extends Component {
     this.setState({ ...this.state, service: value });
   }
 
+  PriceSelected(value) {
+    console.log(this.state.listOfArtist);
+    this.setState({ ...this.state, price: value });
+  }
+
   componentDidMount() {
     this.getAllArtist();
     this.getAllServices();
@@ -84,11 +124,9 @@ export default class SearchArtist extends Component {
         <div className="search-wrapper">
           <div className="search-tool">
             <h3>FILTER</h3>
-
             <SearchCity filterCity={e => this.citySelected(e)}>
               {this.state.city}>
             </SearchCity>
-
             <div className="popularity">
               <p>Popularity:</p>
               <Popularity
@@ -97,15 +135,17 @@ export default class SearchArtist extends Component {
                 value={this.state.popularity}
               />
             </div>
-
             <SearchServices
               AllServices={this.state.listOfServices}
               filterService={e => this.ServiceSelected(e)}
             />
+            <button onClick={e => this.filterResults(e)}>SEARCH</button>
 
-            <button className="btn-search" onClick={e => this.filterResults(e)}>
-              SEARCH
-            </button>
+            <div className="order-by-price" />
+            <Price
+              filterPrice={e => this.PriceSelected(e)}
+              value={this.props.price}
+            />
           </div>
           <div className="results-of-search">
             <ListOfCards listofartists={this.state.listOfArtist} />

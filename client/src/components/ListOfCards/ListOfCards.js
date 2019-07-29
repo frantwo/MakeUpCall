@@ -7,15 +7,17 @@ export default class ListOfCards extends Component {
     return (
       <div className="wrapper-cards">
         {this.props.listofartists.map((oneartist, index) => {
-          return (
-            <ArtistCard
-              key={index}
-              name={oneartist.username}
-              artistPict={oneartist.pictures[0]}
-              experience={oneartist.experience}
-              services={oneartist.services}
-            />
-          );
+          if (oneartist.role === "Artist") {
+            return (
+              <ArtistCard
+                key={index}
+                name={oneartist.username}
+                artistPict={oneartist.pictures[0]}
+                experience={oneartist.experience}
+                services={oneartist.services}
+              />
+            );
+          }
         })}
       </div>
     );

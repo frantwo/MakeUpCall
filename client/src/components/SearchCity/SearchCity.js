@@ -22,6 +22,7 @@ export default class SearchCity extends Component {
 
     return (
       <Select
+        placeholder="Select the city"
         value={selectedOption}
         onChange={e => this.props.filterCity(e)}
         options={options}
