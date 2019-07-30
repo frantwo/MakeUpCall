@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./Profile.css";
 import FormArtist from "../FormArtist/FormArtist";
-import Axios from "axios";
 
 export default class Profile extends Component {
   render() {

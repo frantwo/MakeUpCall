@@ -10,12 +10,14 @@ import { withRouter } from "react-router";
 import Home from "./components/Home/Home";
 import SearchArtist from "./components/SearchArtist/SearchArtist";
 import NavBarBeauty from "./components/BeautyNavBar/BeautyNavBar";
+import DetailsArtist from "./components/DetailsArtists/DetailsArtists";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedInUser: null
+      loggedInUser: null,
+      oneartist: null
     };
     this.service = new AuthServices();
   }
@@ -62,7 +64,7 @@ class App extends Component {
         this.setState({
           loggedInUser: response
         });
-        this.props.history.push("/profile");
+        this.props.history.push("/");
       }
     });
   };
@@ -71,8 +73,15 @@ class App extends Component {
     console.log("AHORA ACTUALIZA LOS DATOS EN EL SERVIDOR!!!");
     console.log(useUpdated);
   };
+  ShowDetails(oneartist) {
+    this.setState({ ...this.state, oneartist: oneartist });
+    this.props.history.push("/details");
+  }
 
   render() {
+    let detailsRoute = this.state.oneartist == null ? "/" : "/details";
+    console.log("ENRUTADOR MÁS ENRUTADO");
+    console.log(this.state.oneartist);
     if (this.state.loggedInUser) {
       return (
         <React.Fragment>
@@ -81,6 +90,8 @@ class App extends Component {
             logout={this.logout}
           />
           <Switch>
+            <Route exact path="/" component={Home} />
+
             <Route
               exact
               path="/profile"
@@ -92,8 +103,22 @@ class App extends Component {
                 />
               )}
             />
-            <Route exact path="/search" component={SearchArtist} />
-            <Route exact path="/" component={Home} />
+            {/* <Route exact path="/search" component={SearchArtist} /> */}
+            <Route
+              exact
+              path="/search"
+              render={() => (
+                <SearchArtist
+                  ShowDetails={oneartist => this.ShowDetails(oneartist)}
+                />
+              )}
+            />
+
+            <Route
+              exact
+              path={detailsRoute}
+              render={() => <DetailsArtist artistinfo={this.state.oneartist} />}
+            />
           </Switch>
         </React.Fragment>
       );
@@ -119,7 +144,7 @@ class App extends Component {
               path="/signup"
               render={() => <Signup {...this.state.loggedInUser} />}
             />
-            <Route
+            {/* <Route
               exact
               path="/search"
               render={() => (
@@ -128,6 +153,22 @@ class App extends Component {
                   getUser={this.getTheUser}
                 />
               )}
+              /> */}
+            <Route
+              exact
+              path="/search"
+              render={() => (
+                <SearchArtist
+                  {...this.state.loggedInUser}
+                  getUser={this.getTheUser}
+                  ShowDetails={oneartist => this.ShowDetails(oneartist)}
+                />
+              )}
+            />
+            <Route
+              exact
+              path={detailsRoute}
+              render={() => <DetailsArtist artistinfo={this.state.oneartist} />}
             />
             <Route exact path="/" component={Home} />
           </Switch>

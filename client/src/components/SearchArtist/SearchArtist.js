@@ -148,7 +148,10 @@ export default class SearchArtist extends Component {
             />
           </div>
           <div className="results-of-search">
-            <ListOfCards listofartists={this.state.listOfArtist} />
+            <ListOfCards
+              listofartists={this.state.listOfArtist}
+              ShowDetails={oneartist => this.props.ShowDetails(oneartist)}
+            />
           </div>
         </div>
       </React.Fragment>

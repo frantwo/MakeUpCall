@@ -10,11 +10,13 @@ export default class ListOfCards extends Component {
           if (oneartist.role === "Artist") {
             return (
               <ArtistCard
-                key={index}
+                key={oneartist._id}
                 name={oneartist.username}
                 artistPict={oneartist.pictures[0]}
                 experience={oneartist.experience}
                 services={oneartist.services}
+                artist={oneartist}
+                ShowDetails={oneartist => this.props.ShowDetails(oneartist)}
               />
             );
           }

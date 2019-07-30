@@ -120,7 +120,7 @@ export default class Profile extends Component {
               <input
                 className="fields-of-form"
                 name="email"
-                type="text"
+                type="email"
                 placeholder="please write your email"
                 value={this.state.userFormDetails.email}
                 onChange={e => this.handleFormChange(e, "email")}
