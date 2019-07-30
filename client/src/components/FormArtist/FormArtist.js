@@ -158,7 +158,7 @@ export default class Profile extends Component {
           <button onClick={e => this.deleteArtist(e)}>REMOVE ACCOUNT</button>
         </form>
         <div>
-          <FormPictures />
+          <FormPictures userID={this.state.userFormDetails._id} />
         </div>
       </div>
     );

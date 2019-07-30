@@ -6,7 +6,8 @@ export default class FormPictures extends Component {
     super(props);
     this.state = {
       photo_name: "",
-      photo_url: ""
+      photo_url: "",
+      userID: ""
     };
     this.service = new service();
   }
@@ -28,7 +29,7 @@ export default class FormPictures extends Component {
     this.service
       .handleUpload(uploadData)
       .then(response => {
-        // console.log('response is: ', response);
+        console.log("response is: ", response);
         // after the console.log we can see that response carries 'secure_url' which we can use to update the state
         this.setState({ photo_url: response.secure_url });
       })
@@ -42,7 +43,7 @@ export default class FormPictures extends Component {
     e.preventDefault();
 
     this.service
-      .saveNewThing(this.state)
+      .saveNewThing({ ...this.state, userID: this.props.userID })
       .then(res => {
         console.log("added: ", res);
         // here you would redirect to some other page
@@ -56,6 +57,7 @@ export default class FormPictures extends Component {
     return (
       <div>
         <h2>Add picture</h2>
+        <h2>{this.props.userID}</h2>
         <form onSubmit={e => this.handleSubmit(e)}>
           <label>Name</label>
           <input

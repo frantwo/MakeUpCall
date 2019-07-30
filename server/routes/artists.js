@@ -35,8 +35,16 @@ router.post("/pictures/create", (req, res, next) => {
   // console.log('body: ', req.body); ==> here we can see that all
   // the fields have the same names as the ones in the model so we can simply pass
   // req.body to the .create() method
-
-  Thing.create(req.body)
+  console.log("/pictures/create");
+  console.log(req.body);
+  User.findByIdAndUpdate(req.body.userID, {
+    $push: {
+      pictures: {
+        photo_name: req.body.photo_name,
+        photo_url: req.body.photo_url
+      }
+    }
+  })
     .then(aNewThing => {
       // console.log('Created new thing: ', aNewThing);
       res.status(200).json(aNewThing);
