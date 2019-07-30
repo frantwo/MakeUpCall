@@ -6,3 +6,9 @@
   margin: 10px;
   /* width: 50vw; */
 }
+
+.wrapper-cards a {
+  width: 200px;
+  padding: 10px;
+  margin: 10px;
+}

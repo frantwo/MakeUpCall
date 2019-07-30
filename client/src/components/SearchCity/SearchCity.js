@@ -4,28 +4,41 @@ import csc from "country-state-city";
 import "./SearchCity.css";
 
 const SpainID = "205";
-let options = csc.getStatesOfCountry(SpainID).map(onecity => {
-  return { value: onecity.name, label: onecity.name };
-});
-options.unshift("");
 
 export default class SearchCity extends Component {
-  state = {
-    selectedOption: null
-  };
-  handleChange = selectedOption => {
-    this.setState({ selectedOption });
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedValue: "",
+      options: [{ value: "", label: "" }]
+    };
+
+    this.options = csc.getStatesOfCountry(SpainID).map(onecity => {
+      return { value: onecity.name, label: onecity.name };
+    });
+  }
+
+  componentDidMount() {
+    this.options.unshift("");
+    this.setState({
+      selectedValue: this.props.defaultValue
+    });
+  }
+
+  handleChange(selectedOption) {
+    this.props.filterCity(selectedOption);
+    this.setState({ selectedValue: selectedOption.value });
+  }
 
   render() {
-    const { selectedOption } = this.props.children; //this.state;
-
     return (
       <Select
+        value={this.options.filter(
+          ({ value }) => value === this.state.selectedValue
+        )}
+        onChange={e => this.handleChange(e)}
+        options={this.options}
         placeholder="Select the city"
-        value={selectedOption}
-        onChange={e => this.props.filterCity(e)}
-        options={options}
       />
     );
   }

@@ -12,6 +12,7 @@ export default class Profile extends Component {
           email={this.props.email}
           password={this.props.password}
           experience={this.props.experience}
+          city={this.props.city}
           updateUserHandler={newArtist => this.updateUser(newArtist)}
           pictures={this.props.pictures}
           logout={this.props.logout}
