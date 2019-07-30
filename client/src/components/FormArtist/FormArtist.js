@@ -50,10 +50,11 @@ export default class Profile extends Component {
         password: "",
         email: this.props.email,
         services: [],
-        experience: this.props.experience ? null : "",
+        experience: this.props.experience,
         city: this.props.city,
         pictures: this.props.pictures
-      }
+      },
+      allFormFilled: true
     });
   }
 
@@ -78,6 +79,17 @@ export default class Profile extends Component {
   submitForm(e) {
     e.preventDefault();
 
+    if (
+      this.state.userFormDetails.password === "" ||
+      this.state.userFormDetails.city === "" ||
+      this.state.userFormDetails.services.length === 0
+    ) {
+      let newState = { ...this.state };
+      newState.allFormFilled = false;
+
+      return this.setState(newState);
+    }
+
     // this.props.updateUserHandler(this.state.userFormDetails);
 
     // then we can use axios to communicate with our API to record this data for example
@@ -87,6 +99,9 @@ export default class Profile extends Component {
       this.state.userFormDetails
     ).then(updatedUser => {
       console.log(updatedUser);
+      let newState = { ...this.state };
+      newState.allFormFilled = true;
+      this.setState(newState);
     });
   }
 
@@ -178,6 +193,9 @@ export default class Profile extends Component {
               </div>
             </fieldset>
           </form>
+          {!this.state.allFormFilled && (
+            <p className="error">You must fill all fields</p>
+          )}
         </div>
         <div className="pictures-wrapper">
           <FormPictures userID={this.state.userFormDetails._id} />
