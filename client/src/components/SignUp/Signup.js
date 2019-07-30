@@ -6,7 +6,7 @@ import "./Signup.css";
 export default class Signup extends Component {
   constructor(props) {
     super(props);
-    this.state = { username: "", password: "" };
+    this.state = { username: "", password: "", role: "", email: "" };
     this.service = new AuthServices();
   }
 
@@ -14,14 +14,17 @@ export default class Signup extends Component {
     event.preventDefault();
     const username = this.state.username;
     const password = this.state.password;
+    const role = this.state.role;
+    const email = this.state.email;
 
     this.service
-      .signup(username, password)
+      .signup(username, password, role, email)
       .then(response => {
         this.setState({
           username: "",
           password: "",
-          email: ""
+          email: "",
+          role: ""
         });
         // this.props.getUser(response)
       })
@@ -30,6 +33,7 @@ export default class Signup extends Component {
 
   handleChange = event => {
     const { name, value } = event.target;
+    console.log({ [name]: value });
     this.setState({ [name]: value });
   };
 
@@ -67,7 +71,8 @@ export default class Signup extends Component {
                 <input
                   type="radio"
                   checked="checked"
-                  name="radio"
+                  name="role"
+                  value="User"
                   onChange={e => this.handleChange(e)}
                 />
                 <span className="checkmark" />
@@ -76,7 +81,8 @@ export default class Signup extends Component {
                 Artist
                 <input
                   type="radio"
-                  name="radio"
+                  name="role"
+                  value="Artist"
                   onChange={e => this.handleChange(e)}
                 />
                 <span className="checkmark" />
