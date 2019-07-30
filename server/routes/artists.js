@@ -89,7 +89,8 @@ router.put("/update", (req, res, next) => {
     username: req.body.username,
     password: hashPass,
     email: req.body.email,
-    // services: req.body.services,
+    city: req.body.city,
+    services: req.body.services,
     experience: req.body.experience
   })
     .then(updatedUser => {

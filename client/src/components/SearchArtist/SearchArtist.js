@@ -44,8 +44,6 @@ export default class SearchArtist extends Component {
   };
 
   filterResults(e) {
-    console.log("this.state.city");
-    console.log(this.state.city);
     let filterByCity = this.state.city !== undefined && this.state.city !== "";
     let filterByPopularity =
       this.state.popularity !== undefined && this.state.popularity !== 0;
@@ -53,9 +51,6 @@ export default class SearchArtist extends Component {
       this.state.service !== null && this.state.service.length !== 0;
 
     // let filterByPrice = this.state.price !== null && this.state.price;
-
-    console.log("filterByCity");
-    console.log(filterByCity);
 
     if (
       !filterByCity &&
@@ -86,12 +81,8 @@ export default class SearchArtist extends Component {
       // }
 
       queryString = queryString.substring(1, queryString.length);
-      console.log("FILTER RESULTS CONSULTA ENVIADA A LA API");
-      console.log(queryString);
 
       Axios.get(baseURL + queryString).then(responseFromApi => {
-        console.log("VALORES DEVUELTOS DE LA API SEARCH");
-        console.log(responseFromApi);
         this.setState({
           ...this.state,
           listOfArtist: responseFromApi.data

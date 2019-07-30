@@ -49,8 +49,8 @@ export default class Profile extends Component {
         username: this.props.username,
         password: "",
         email: this.props.email,
-        // services: [],
-        experience: this.props.experience,
+        services: [],
+        experience: this.props.experience ? null : "",
         city: this.props.city,
         pictures: this.props.pictures
       }
@@ -91,10 +91,19 @@ export default class Profile extends Component {
   }
 
   citySelected(city) {
-    this.setState({ ...this.state, city: city.value });
+    let newState = { ...this.state };
+    newState.userFormDetails.city = city.value;
+    this.setState(newState);
   }
+
   ServiceSelected(value) {
-    this.setState({ ...this.state, service: value });
+    this.setState({
+      ...this.state,
+      userFormDetails: {
+        ...this.state.userFormDetails,
+        services: value
+      }
+    });
   }
 
   render() {
@@ -148,6 +157,7 @@ export default class Profile extends Component {
                 className="field-city"
                 name="city"
                 filterCity={e => this.citySelected(e)}
+                defaultValue={this.state.userFormDetails.city}
               >
                 {this.state.city}>
               </SearchCity>
