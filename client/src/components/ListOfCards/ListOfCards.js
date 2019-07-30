@@ -20,6 +20,8 @@ export default class ListOfCards extends Component {
                 />
               </Link>
             );
+          } else {
+            return <br key={oneartist._id} />;
           }
         })}
       </div>
