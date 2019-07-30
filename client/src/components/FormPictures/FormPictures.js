@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import service from "./service";
+import "./FormPictures.css";
 
 export default class FormPictures extends Component {
   constructor(props) {
@@ -7,7 +8,8 @@ export default class FormPictures extends Component {
     this.state = {
       photo_name: "",
       photo_url: "",
-      userID: ""
+      userID: "",
+      avoidAddPict: false
     };
     this.service = new service();
   }
@@ -31,7 +33,7 @@ export default class FormPictures extends Component {
       .then(response => {
         console.log("response is: ", response);
         // after the console.log we can see that response carries 'secure_url' which we can use to update the state
-        this.setState({ photo_url: response.secure_url });
+        this.setState({ photo_url: response.secure_url, avoidAddPict: true });
       })
       .catch(err => {
         console.log("Error while uploading the file: ", err);
@@ -58,15 +60,30 @@ export default class FormPictures extends Component {
       <React.Fragment>
         <h2>Add pictures:</h2>
         <form onSubmit={e => this.handleSubmit(e)}>
-          <label>Name</label>
-          <input
-            type="text"
-            name="photo_name"
-            value={this.state.photo_name}
-            onChange={e => this.handleChange(e)}
-          />
-          <input type="file" onChange={e => this.handleFileUpload(e)} />
-          <button type="submit">Save new thing</button>
+          <div className="choose-pict">
+            <div>
+              <label className="fields-form">Name</label>
+              <input
+                className="fields-form"
+                type="text"
+                name="photo_name"
+                value={this.state.photo_name}
+                onChange={e => this.handleChange(e)}
+              />
+            </div>
+            <input
+              className="fields-form"
+              type="file"
+              onChange={e => this.handleFileUpload(e)}
+            />
+          </div>
+          <button
+            className="button-add-pict"
+            disabled={!this.state.avoidAddPict}
+            type="submit"
+          >
+            Add new picture
+          </button>
         </form>
       </React.Fragment>
     );
