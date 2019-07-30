@@ -19,7 +19,8 @@ export default class Profile extends Component {
         experience: "",
         city: "",
         listOfServices: [],
-        service: []
+        service: [],
+        pictures: []
       }
     };
   }
@@ -48,7 +49,8 @@ export default class Profile extends Component {
         email: this.props.email,
         // services: [],
         experience: this.props.experience,
-        city: this.props.city
+        city: this.props.city,
+        pictures: this.props.pictures
       }
     });
   }
@@ -96,69 +98,84 @@ export default class Profile extends Component {
   render() {
     return (
       <div className="profile-form">
-        <form className="form-wrapper">
-          <h1>Welcome to your profile: {this.props.username} </h1>
-          <fieldset className="fieldset-wrapper">
-            <input
-              className="fields-of-form"
-              type="text"
-              name="_id"
-              value={this.state.userFormDetails._id}
-              onChange={e => this.handleFormChange(e, "username")}
-            />
-            <input
-              className="fields-of-form"
-              name="username"
-              type="text"
-              placeholder="please write your username"
-              value={this.state.userFormDetails.username}
-              onChange={e => this.handleFormChange(e, "username")}
-            />
-            <input
-              className="fields-of-form"
-              name="email"
-              type="text"
-              placeholder="please write your email"
-              value={this.state.userFormDetails.email}
-              onChange={e => this.handleFormChange(e, "email")}
-            />
-            <input
-              className="fields-of-form"
-              name="password"
-              type="password"
-              placeholder="please write your password"
-              value={this.state.userFormDetails.password}
-              onChange={e => this.handleFormChange(e, "password")}
-            />
-            <input
-              className="fields-of-form"
-              name="experience"
-              type="text"
-              placeholder="please write your experience"
-              value={this.state.userFormDetails.experience}
-              onChange={e => this.handleFormChange(e, "experience")}
-            />
+        <div className="form-wrapper">
+          <form>
+            <h1>Welcome to your profile: {this.props.username} </h1>
+            <fieldset className="fieldset-wrapper">
+              <input
+                className="fields-of-form"
+                type="text"
+                name="_id"
+                value={this.state.userFormDetails._id}
+                onChange={e => this.handleFormChange(e, "username")}
+              />
+              <input
+                className="fields-of-form"
+                name="username"
+                type="text"
+                placeholder="please write your username"
+                value={this.state.userFormDetails.username}
+                onChange={e => this.handleFormChange(e, "username")}
+              />
+              <input
+                className="fields-of-form"
+                name="email"
+                type="text"
+                placeholder="please write your email"
+                value={this.state.userFormDetails.email}
+                onChange={e => this.handleFormChange(e, "email")}
+              />
+              <input
+                className="fields-of-form"
+                name="password"
+                type="password"
+                placeholder="please write your password"
+                value={this.state.userFormDetails.password}
+                onChange={e => this.handleFormChange(e, "password")}
+              />
+              <input
+                className="fields-of-form"
+                name="experience"
+                type="text"
+                placeholder="please write your experience"
+                value={this.state.userFormDetails.experience}
+                onChange={e => this.handleFormChange(e, "experience")}
+              />
 
-            <SearchCity
-              className="field-city"
-              name="city"
-              filterCity={e => this.citySelected(e)}
-            >
-              {this.state.city}>
-            </SearchCity>
-            <br />
-            <SearchServices
-              className="field-service"
-              name="services"
-              AllServices={this.state.userFormDetails.listOfServices}
-              filterService={e => this.ServiceSelected(e)}
-            />
-          </fieldset>
-          <button onClick={e => this.submitForm(e)}>UPDATE ACCOUNT</button>
-          <button onClick={e => this.deleteArtist(e)}>REMOVE ACCOUNT</button>
-        </form>
-        <div>
+              <SearchCity
+                className="field-city"
+                name="city"
+                filterCity={e => this.citySelected(e)}
+              >
+                {this.state.city}>
+              </SearchCity>
+              <br />
+              <SearchServices
+                className="field-service"
+                name="services"
+                AllServices={this.state.userFormDetails.listOfServices}
+                filterService={e => this.ServiceSelected(e)}
+              />
+            </fieldset>
+            <button onClick={e => this.submitForm(e)}>UPDATE ACCOUNT</button>
+            <button onClick={e => this.deleteArtist(e)}>REMOVE ACCOUNT</button>
+          </form>
+        </div>
+        <div className="pictures-wrapper">
           <FormPictures userID={this.state.userFormDetails._id} />
+          <h3>List:</h3>
+          <div className="container-pict">
+            {this.state.userFormDetails.pictures.map((onepict, index) => {
+              return (
+                <img
+                  className="mini-pict"
+                  key={index}
+                  src={onepict.photo_url}
+                  alt={onepict.photo_name}
+                />
+              );
+            })}
+          </div>
         </div>
       </div>
     );

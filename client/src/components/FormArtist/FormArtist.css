@@ -1,0 +1,25 @@
+.profile-form {
+  display: flex;
+  justify-content: center;
+}
+
+.pictures-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+  height: 100%;
+  align-items: flex-start;
+}
+
+.mini-pict {
+  width: 80px;
+  height: 80px;
+  margin: 10px;
+}
+
+.container-pict {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}

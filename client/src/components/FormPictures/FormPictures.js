@@ -55,9 +55,8 @@ export default class FormPictures extends Component {
 
   render() {
     return (
-      <div>
-        <h2>Add picture</h2>
-        <h2>{this.props.userID}</h2>
+      <React.Fragment>
+        <h2>Add pictures:</h2>
         <form onSubmit={e => this.handleSubmit(e)}>
           <label>Name</label>
           <input
@@ -69,7 +68,7 @@ export default class FormPictures extends Component {
           <input type="file" onChange={e => this.handleFileUpload(e)} />
           <button type="submit">Save new thing</button>
         </form>
-      </div>
+      </React.Fragment>
     );
   }
 }
