@@ -104,7 +104,7 @@ export default class Profile extends Component {
             <fieldset className="fieldset-wrapper">
               <input
                 className="fields-of-form"
-                type="text"
+                type="hidden"
                 name="_id"
                 value={this.state.userFormDetails._id}
                 onChange={e => this.handleFormChange(e, "username")}
@@ -156,9 +156,15 @@ export default class Profile extends Component {
                 AllServices={this.state.userFormDetails.listOfServices}
                 filterService={e => this.ServiceSelected(e)}
               />
+              <div className="buttons-account">
+                <button onClick={e => this.submitForm(e)}>
+                  UPDATE ACCOUNT
+                </button>
+                <button onClick={e => this.deleteArtist(e)}>
+                  REMOVE ACCOUNT
+                </button>
+              </div>
             </fieldset>
-            <button onClick={e => this.submitForm(e)}>UPDATE ACCOUNT</button>
-            <button onClick={e => this.deleteArtist(e)}>REMOVE ACCOUNT</button>
           </form>
         </div>
         <div className="pictures-wrapper">
@@ -169,7 +175,7 @@ export default class Profile extends Component {
               return (
                 <img
                   className="mini-pict"
-                  key={index}
+                  key={onepict._id}
                   src={onepict.photo_url}
                   alt={onepict.photo_name}
                 />

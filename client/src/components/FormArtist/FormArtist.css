@@ -23,3 +23,9 @@
   flex-wrap: wrap;
   width: 100%;
 }
+
+.buttons-account {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
