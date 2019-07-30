@@ -22,21 +22,25 @@ export default class SearchArtist extends Component {
   }
 
   getAllArtist = () => {
-    Axios.get(`http://localhost:5000/artists/list`).then(responseFromApi => {
-      this.setState({
-        ...this.state,
-        listOfArtist: responseFromApi.data
-      });
-    });
+    Axios.get(`${process.env.REACT_APP_URL}/artists/list`).then(
+      responseFromApi => {
+        this.setState({
+          ...this.state,
+          listOfArtist: responseFromApi.data
+        });
+      }
+    );
   };
 
   getAllServices = () => {
-    Axios.get(`http://localhost:5000/services/list`).then(responseFromApi => {
-      this.setState({
-        ...this.state,
-        listOfServices: [...responseFromApi.data]
-      });
-    });
+    Axios.get(`${process.env.REACT_APP_URL}/services/list`).then(
+      responseFromApi => {
+        this.setState({
+          ...this.state,
+          listOfServices: [...responseFromApi.data]
+        });
+      }
+    );
   };
 
   filterResults(e) {
@@ -61,7 +65,7 @@ export default class SearchArtist extends Component {
     ) {
       this.getAllArtist();
     } else {
-      let baseURL = `http://localhost:5000/artists/search?`;
+      let baseURL = `${process.env.REACT_APP_URL}/artists/search?`;
       let queryString = "";
       if (filterByCity) {
         queryString = queryString + `&city=${this.state.city}`;

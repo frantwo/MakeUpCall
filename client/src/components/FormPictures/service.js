@@ -3,7 +3,7 @@ import axios from "axios";
 export default class service {
   constructor() {
     this.service = axios.create({
-      baseURL: "http://localhost:5000/artists",
+      baseURL: `${process.env.REACT_APP_URL}/artists`,
       withCredentials: true // => you might need this when having the users in the app
     });
   }

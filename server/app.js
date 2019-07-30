@@ -14,7 +14,7 @@ const MongoStore = require("connect-mongo")(session);
 const flash = require("connect-flash");
 
 mongoose
-  .connect("mongodb://localhost/server", { useNewUrlParser: true })
+  .connect(process.env.LOCAL_BD, { useNewUrlParser: true })
   .then(x => {
     console.log(
       `Connected to Mongo! Database name: "${x.connections[0].name}"`
@@ -95,5 +95,9 @@ app.use("/artists", artistsRoutes);
 
 const servicesRoutes = require("./routes/services");
 app.use("/services", servicesRoutes);
+
+app.use((req, res) => {
+  res.sendFile(__dirname + "/public/index.html");
+});
 
 module.exports = app;

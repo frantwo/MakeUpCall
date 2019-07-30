@@ -18,7 +18,9 @@ export default class DetailsArtists extends Component {
   findDetails = () => {
     axios
       .get(
-        `http://localhost:5000/artists/getDetails/${this.props.match.params.id}`
+        `${process.env.REACT_APP_URL}/artists/getDetails/${
+          this.props.match.params.id
+        }`
       )
       .then(artist => {
         this.setState({

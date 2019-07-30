@@ -26,15 +26,17 @@ export default class Profile extends Component {
   }
 
   getAllServices = () => {
-    Axios.get(`http://localhost:5000/services/list`).then(responseFromApi => {
-      this.setState({
-        ...this.state,
-        userFormDetails: {
-          ...this.state.userFormDetails,
-          listOfServices: [...responseFromApi.data]
-        }
-      });
-    });
+    Axios.get(`${process.env.REACT_APP_URL}/services/list`).then(
+      responseFromApi => {
+        this.setState({
+          ...this.state,
+          userFormDetails: {
+            ...this.state.userFormDetails,
+            listOfServices: [...responseFromApi.data]
+          }
+        });
+      }
+    );
   };
 
   componentDidMount() {
@@ -65,12 +67,12 @@ export default class Profile extends Component {
     e.preventDefault();
     let currentUserId = this.state.userFormDetails._id;
 
-    Axios.delete("http://localhost:5000/artists/delete/" + currentUserId).then(
-      deletedInfo => {
-        console.log(deletedInfo);
-        this.props.logout();
-      }
-    );
+    Axios.delete(
+      `${process.env.REACT_APP_URL}/artists/delete/` + currentUserId
+    ).then(deletedInfo => {
+      console.log(deletedInfo);
+      this.props.logout();
+    });
   }
 
   submitForm(e) {
@@ -81,7 +83,7 @@ export default class Profile extends Component {
     // then we can use axios to communicate with our API to record this data for example
     // axios.put("http://localhost:3000/employeeDetails", this.state.userFormDetails).then
     Axios.put(
-      "http://localhost:5000/artists/update",
+      `${process.env.REACT_APP_URL}/artists/update`,
       this.state.userFormDetails
     ).then(updatedUser => {
       console.log(updatedUser);
