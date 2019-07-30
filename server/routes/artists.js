@@ -19,6 +19,14 @@ const selectionObject = {
   city: true
 };
 
+router.get("/getDetails/:id", (req, res, next) => {
+  User.findById(req.params.id)
+    .then(artist => {
+      res.json(artist);
+    })
+    .catch(err => console.log(err));
+});
+
 router.post("/upload", uploader.single("photo_url"), (req, res, next) => {
   // console.log('file is: ', req.file)
 

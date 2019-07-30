@@ -79,7 +79,6 @@ class App extends Component {
   }
 
   render() {
-    let detailsRoute = this.state.oneartist == null ? "/" : "/details";
     console.log("ENRUTADOR MÁS ENRUTADO");
     console.log(this.state.oneartist);
     if (this.state.loggedInUser) {
@@ -104,20 +103,14 @@ class App extends Component {
               )}
             />
             {/* <Route exact path="/search" component={SearchArtist} /> */}
-            <Route
-              exact
-              path="/search"
-              render={() => (
-                <SearchArtist
-                  ShowDetails={oneartist => this.ShowDetails(oneartist)}
-                />
-              )}
-            />
+            <Route exact path="/search" render={() => <SearchArtist />} />
 
             <Route
               exact
-              path={detailsRoute}
-              render={() => <DetailsArtist artistinfo={this.state.oneartist} />}
+              path="/details/:id"
+              render={props => (
+                <DetailsArtist {...props} artistinfo={this.state.oneartist} />
+              )}
             />
           </Switch>
         </React.Fragment>
@@ -144,16 +137,6 @@ class App extends Component {
               path="/signup"
               render={() => <Signup {...this.state.loggedInUser} />}
             />
-            {/* <Route
-              exact
-              path="/search"
-              render={() => (
-                <SearchArtist
-                  {...this.state.loggedInUser}
-                  getUser={this.getTheUser}
-                />
-              )}
-              /> */}
             <Route
               exact
               path="/search"
@@ -161,14 +144,15 @@ class App extends Component {
                 <SearchArtist
                   {...this.state.loggedInUser}
                   getUser={this.getTheUser}
-                  ShowDetails={oneartist => this.ShowDetails(oneartist)}
                 />
               )}
             />
             <Route
               exact
-              path={detailsRoute}
-              render={() => <DetailsArtist artistinfo={this.state.oneartist} />}
+              path="/details/:id"
+              render={props => (
+                <DetailsArtist {...props} artistinfo={this.state.oneartist} />
+              )}
             />
             <Route exact path="/" component={Home} />
           </Switch>

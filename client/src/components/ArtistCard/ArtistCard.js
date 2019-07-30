@@ -10,7 +10,6 @@ export default class ArtistCard extends Component {
           className="artist-pict"
           src={this.props.artistPict.photo_url}
           alt={this.props.artistPict.photo_name}
-          onClick={() => this.props.ShowDetails(this.props.artist)}
         />
         <div className="container-card">
           <h4>
