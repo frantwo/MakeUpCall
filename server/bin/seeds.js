@@ -1,3 +1,4 @@
+require("dotenv").config();
 // Seeds file that remove all users and create 2 new users
 
 // To execute this seed, run from the root of the project
@@ -13,7 +14,7 @@ const Comments = require("../models/Comments");
 const bcryptSalt = 10;
 
 mongoose
-  .connect("mongodb://localhost/server", { useNewUrlParser: true })
+  .connect(process.env.ATLAS_CONNECTION, { useNewUrlParser: true })
   .then(x => {
     console.log(
       `Connected to Mongo! Database name: "${x.connections[0].name}"`
