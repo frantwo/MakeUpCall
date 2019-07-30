@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const ObjectID = require("mongodb").ObjectID;
 // const mongo = require('mongodb'),
 // var ObjectID = mongo.ObjectID;
+const uploader = require("../configs/cloudinary-setup");
 
 const selectionObject = {
   _id: true,
@@ -17,6 +18,31 @@ const selectionObject = {
   ranking: true,
   city: true
 };
+
+router.post("/upload", uploader.single("photo_url"), (req, res, next) => {
+  // console.log('file is: ', req.file)
+
+  if (!req.file) {
+    next(new Error("No file uploaded!"));
+    return;
+  }
+  // get secure_url from the file object and save it in the
+  // variable 'secure_url', but this can be any name, just make sure you remember to use the same in frontend
+  res.json({ secure_url: req.file.secure_url });
+});
+
+router.post("/pictures/create", (req, res, next) => {
+  // console.log('body: ', req.body); ==> here we can see that all
+  // the fields have the same names as the ones in the model so we can simply pass
+  // req.body to the .create() method
+
+  Thing.create(req.body)
+    .then(aNewThing => {
+      // console.log('Created new thing: ', aNewThing);
+      res.status(200).json(aNewThing);
+    })
+    .catch(err => next(err));
+});
 
 router.get("/list", (req, res, next) => {
   User.find({})

@@ -3,6 +3,7 @@ import "./FormArtist.css";
 import SearchCity from "../SearchCity/SearchCity";
 import SearchServices from "../SearchServices/SearchServices";
 import Axios from "axios";
+import FormPictures from "../FormPictures/FormPictures";
 
 export default class Profile extends Component {
   constructor() {
@@ -156,6 +157,9 @@ export default class Profile extends Component {
           <button onClick={e => this.submitForm(e)}>UPDATE ACCOUNT</button>
           <button onClick={e => this.deleteArtist(e)}>REMOVE ACCOUNT</button>
         </form>
+        <div>
+          <FormPictures />
+        </div>
       </div>
     );
   }
