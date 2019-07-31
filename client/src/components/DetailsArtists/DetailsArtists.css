@@ -1,9 +1,35 @@
 .details-container {
   display: flex;
+  justify-content: space-evenly;
   height: 100vh;
   width: 100vw;
+  padding: 30px;
+}
+.info-container {
+  display: flex;
+  width: 50vw;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
 }
 
+.pictures-container {
+  display: flex;
+  width: 50vw;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+}
+
+.fieldset-details-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+}
 .fields-details {
+  width: 90%;
   font-size: 18px;
+  margin: 10px;
 }

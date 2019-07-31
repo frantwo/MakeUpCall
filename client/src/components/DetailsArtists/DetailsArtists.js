@@ -32,37 +32,37 @@ export default class DetailsArtists extends Component {
   };
 
   render() {
-    console.log(this.props.match.params.id);
     return (
       <div className="details-container">
         <div className="info-container">
           <h1>{this.state.artist.username} </h1>
           <fieldset className="fieldset-details-wrapper">
-            <label>
-              email:
-              <input
-                className="fields-details"
-                type="text"
-                value={this.state.artist.email}
-              />
-            </label>
-            <label>
-              Ciudad:
-              <input
-                className="fields-details"
-                type="text"
-                value={this.state.artist.city}
-              />
-            </label>
+            <label>email:</label>
+            <input
+              disabled
+              className="fields-details"
+              type="text"
+              value={this.state.artist.email}
+            />
+            <label>Ciudad:</label>
+            <input
+              disabled
+              className="fields-details"
+              type="text"
+              value={this.state.artist.city}
+            />
             <label>
               Experiencia:
-              <textarea className="fields-details" rows="5" cols="10">
-                {this.state.artist.experience}
-              </textarea>
+              <textarea
+                className="fields-details"
+                rows="5"
+                cols="10"
+                value={this.state.artist.experience}
+              />
             </label>
           </fieldset>
         </div>
-        <div>
+        <div className="pictures-container">
           <h2>lista imagenes</h2>
         </div>
       </div>

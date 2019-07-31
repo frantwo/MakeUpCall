@@ -17,7 +17,8 @@ export default class SearchArtist extends Component {
       popularity: undefined,
       service: [],
       listOfServices: [],
-      price: 0
+      price: 0,
+      resultsOfFilter: 0
     };
   }
 
@@ -26,7 +27,8 @@ export default class SearchArtist extends Component {
       responseFromApi => {
         this.setState({
           ...this.state,
-          listOfArtist: responseFromApi.data
+          listOfArtist: responseFromApi.data,
+          resultsOfFilter: responseFromApi.data.length
         });
       }
     );
@@ -82,10 +84,13 @@ export default class SearchArtist extends Component {
 
       queryString = queryString.substring(1, queryString.length);
 
+      console.log("String de busqueda: " + queryString);
+
       Axios.get(baseURL + queryString).then(responseFromApi => {
         this.setState({
           ...this.state,
-          listOfArtist: responseFromApi.data
+          listOfArtist: responseFromApi.data,
+          resultsOfFilter: responseFromApi.data.length
         });
       });
     }
@@ -141,6 +146,7 @@ export default class SearchArtist extends Component {
               filterPrice={e => this.PriceSelected(e)}
               value={this.props.price}
             />
+            <p> {this.state.resultsOfFilter} results</p>
           </div>
           <div className="results-of-search">
             <ListOfCards listofartists={this.state.listOfArtist} />

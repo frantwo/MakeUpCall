@@ -49,6 +49,7 @@ export default class FormPictures extends Component {
       .then(res => {
         console.log("added: ", res);
         // here you would redirect to some other page
+        this.setState({ avoidAddPict: false });
       })
       .catch(err => {
         console.log("Error while adding the thing: ", err);
