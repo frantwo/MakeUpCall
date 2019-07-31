@@ -5,6 +5,15 @@
   width: 100vw;
   padding: 30px;
 }
+.header-detail-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-detail-container h1 {
+  margin: 10px;
+}
 .info-container {
   display: flex;
   width: 50vw;

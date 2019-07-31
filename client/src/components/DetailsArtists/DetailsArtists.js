@@ -3,6 +3,7 @@ import "./DetailsArtists.css";
 import axios from "axios";
 import Comment from "../Comment/Comment";
 import { Link } from "react-router-dom";
+import Popularity from "../Popularity/Popularity";
 
 export default class DetailsArtists extends Component {
   constructor(props) {
@@ -44,7 +45,10 @@ export default class DetailsArtists extends Component {
     return (
       <div className="details-container">
         <div className="info-container">
-          <h1>{this.state.artist.username} </h1>
+          <div className="header-detail-container">
+            <h1>{this.state.artist.username} </h1>
+            <Popularity mode="noneditable" value={this.state.artist.ranking} />
+          </div>
           <fieldset className="fieldset-details-wrapper">
             <label>Email:</label>
             <input
