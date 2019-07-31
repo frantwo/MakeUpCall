@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
+const Comment = require("../models/Comments");
 const bcrypt = require("bcrypt");
 const ObjectID = require("mongodb").ObjectID;
 // const mongo = require('mongodb'),
@@ -19,8 +20,42 @@ const selectionObject = {
   city: true
 };
 
+router.get("/getcomments/:id", (req, res, next) => {
+  Comment.find({ artist: req.params.id })
+    .then(comments => {
+      res.json(comments);
+    })
+    .catch(err => console.log(err));
+});
+
+router.post("/newcomment", (req, res, next) => {
+  Comment.create({
+    valoration: req.body.valoration,
+    title: req.body.title,
+    comment: req.body.comment,
+    user: req.body.userID,
+    artist: req.body.artistID
+  }).then(newComment => {
+    Comment.find({ artist: newComment.artist }).then(allCommentOfThisArtist => {
+      let valorationAvg = allCommentOfThisArtist.reduce((prev, cur) => {
+        return prev + cur.valoration;
+      }, 0);
+      valorationAvg = Math.ceil(valorationAvg / allCommentOfThisArtist.length);
+      User.findByIdAndUpdate(allCommentOfThisArtist[0].artist, {
+        ranking: valorationAvg
+      }).then(rankingUserUpdated => {
+        res.json(rankingUserUpdated);
+      });
+    });
+  });
+});
+
 router.get("/getDetails/:id", (req, res, next) => {
   User.findById(req.params.id)
+    .populate({
+      path: "services.serviceId",
+      model: "Services"
+    })
     .then(artist => {
       res.json(artist);
     })
@@ -91,10 +126,12 @@ router.put("/update", (req, res, next) => {
   const hashPass = bcrypt.hashSync(req.body.password, salt);
 
   let tmpServices;
+  console.log("REPETIMOS EL TEMITA DE LOS ACTUALIZAR SERVICES!!!!");
+  console.log(req.body.services);
   if (req.body.services) {
     tmpServices = req.body.services.map(element => {
       return {
-        _id: element.value,
+        serviceId: element.value,
         price: randomIntFromInterval(10, 100)
       };
     });
@@ -185,9 +222,14 @@ router.get("/search", (req, res, next) => {
   console.log(searchString);
 
   User.find(searchString)
-    .populate("Services")
+    .populate({
+      path: "services.serviceId",
+      model: "Services"
+    })
     // .populate("comments")
-    .then(allArtistsFiltered => res.json(allArtistsFiltered))
+    .then(allArtistsFiltered => {
+      res.json(allArtistsFiltered);
+    })
     .catch(err => {
       console.log(err);
     });

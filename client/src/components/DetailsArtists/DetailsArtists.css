@@ -5,6 +5,15 @@
   width: 100vw;
   padding: 30px;
 }
+.header-detail-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-detail-container h1 {
+  margin: 10px;
+}
 .info-container {
   display: flex;
   width: 50vw;
@@ -28,8 +37,35 @@
   width: 100%;
   flex-direction: column;
 }
+.fieldset-details-wrapper label {
+  font-weight: bold;
+}
 .fields-details {
   width: 90%;
   font-size: 18px;
   margin: 10px;
+}
+
+.container-pict {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.mini-pict {
+  width: 80px;
+  height: 80px;
+  margin: 10px;
+}
+
+.comment-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 10px;
+  margin: 10px;
+}
+
+.btn-write-comment {
+  width: 150;
 }

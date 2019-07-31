@@ -23,6 +23,10 @@ export default class Popularity extends Component {
     this.setState({ rating: nextValue });
   }
 
+  componentDidMount() {
+    this.setState({ ...this.state, rating: this.props.value });
+  }
+
   render() {
     switch (this.props.mode) {
       case "editable-with-handlers":
@@ -41,12 +45,12 @@ export default class Popularity extends Component {
       case "noneditable":
         return (
           <div>
-            <div style={{ fontSize: 30 }}>
+            <div style={{ fontSize: 20 }}>
               <StarRatingComponent
                 name="app4"
                 editing={false}
                 starCount={5}
-                value={3}
+                value={this.props.value}
               />
             </div>
           </div>

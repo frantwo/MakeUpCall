@@ -107,7 +107,7 @@ Services.deleteMany()
         servicestmp = servicescreated;
         users = users.map(oneuser => {
           oneuser.services = servicescreated.map((oneservice, index) => {
-            return { _id: oneservice._id, price: index * 10 };
+            return { serviceId: oneservice._id, price: index * 10 };
           });
           return oneuser;
         });

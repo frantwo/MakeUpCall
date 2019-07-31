@@ -8,7 +8,10 @@ const userSchema = new Schema(
     email: String,
     role: { type: String, enum: ["User", "Artist"] },
     services: [
-      { id: { type: Schema.Types.ObjectId, ref: "Services" }, price: Number }
+      {
+        serviceId: { type: Schema.Types.ObjectId, ref: "Services" },
+        price: Number
+      }
     ],
     experience: String,
     // areas:[String],

@@ -1,19 +1,48 @@
 import React, { Component } from "react";
 import "./DetailsArtists.css";
 import axios from "axios";
+import Comment from "../Comment/Comment";
+import { Link } from "react-router-dom";
+import Popularity from "../Popularity/Popularity";
 
 export default class DetailsArtists extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      artist: {}
+      artist: {
+        username: "",
+        email: "",
+        city: "",
+        experience: "",
+        services: [],
+        pictures: []
+      },
+      comments: []
     };
   }
 
   componentDidMount() {
     this.findDetails();
+    this.findComments();
   }
+
+  findComments = () => {
+    axios
+      .get(
+        `${process.env.REACT_APP_URL}/artists/getcomments/${
+          this.props.match.params.id
+        }`
+      )
+      .then(comments => {
+        console.log("ESTOS SON TODOS LOS COMENTARIOS:");
+        console.log(comments.data);
+        this.setState({
+          ...this.state,
+          comments: [...comments.data]
+        });
+      });
+  };
 
   findDetails = () => {
     axios
@@ -35,9 +64,12 @@ export default class DetailsArtists extends Component {
     return (
       <div className="details-container">
         <div className="info-container">
-          <h1>{this.state.artist.username} </h1>
+          <div className="header-detail-container">
+            <h1>{this.state.artist.username} </h1>
+            <Popularity mode="noneditable" value={this.state.artist.ranking} />
+          </div>
           <fieldset className="fieldset-details-wrapper">
-            <label>email:</label>
+            <label>Email:</label>
             <input
               disabled
               className="fields-details"
@@ -51,19 +83,65 @@ export default class DetailsArtists extends Component {
               type="text"
               value={this.state.artist.city}
             />
-            <label>
-              Experiencia:
-              <textarea
-                className="fields-details"
-                rows="5"
-                cols="10"
-                value={this.state.artist.experience}
-              />
-            </label>
+            <label>Experiencia:</label>
+            <textarea
+              disabled
+              className="fields-details"
+              rows="5"
+              cols="10"
+              value={this.state.artist.experience}
+            />
+            <label>Servicios</label>
+            {this.state.artist.services.map((element, index) => {
+              return (
+                <p key={index}>
+                  - {element.serviceId.name} ({element.price} €)
+                </p>
+              );
+            })}
           </fieldset>
+          <br />
+          <div className="comment-content">
+            <Link key="1" to={`/newcomment/${this.props.match.params.id}`}>
+              <button className="btn-write-comment">Write a comment</button>
+            </Link>
+
+            {this.state.comments.map((element, index) => {
+              return (
+                <Comment
+                  key={index}
+                  user={element.user}
+                  valoration={element.valoration}
+                  creation_date={element.created_at}
+                  title={element.title}
+                  comment={element.comment}
+                />
+              );
+            })}
+
+            {/* <Comment
+              user={"prueba"}
+              valoration={1}
+              creation_date={"10/10/2019"}
+              title={"primer comentario"}
+              comment={"fue uan pasada de servicio y repitiré"}
+            /> */}
+          </div>
         </div>
         <div className="pictures-container">
-          <h2>lista imagenes</h2>
+          <h3>Works:</h3>
+          <div className="container-pict">
+            {this.state.artist.pictures.map((onepict, index) => {
+              return (
+                <img
+                  className="mini-pict"
+                  key={onepict._id}
+                  src={onepict.photo_url}
+                  alt={onepict.photo_name}
+                />
+              );
+            })}
+          </div>
         </div>
       </div>
     );

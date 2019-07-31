@@ -1,0 +1,36 @@
+.comment-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-opinion {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.ranking-content {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.ranking-content label {
+  margin: 10px;
+  font-size: 18px;
+}
+
+.field-opinion {
+  font-size: 18px;
+  margin: 10px;
+  width: 100%;
+}
+
+.btn-opinion {
+  font-size: 18px;
+}
