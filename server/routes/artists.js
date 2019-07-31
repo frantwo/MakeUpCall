@@ -95,10 +95,12 @@ router.put("/update", (req, res, next) => {
   const hashPass = bcrypt.hashSync(req.body.password, salt);
 
   let tmpServices;
+  console.log("REPETIMOS EL TEMITA DE LOS ACTUALIZAR SERVICES!!!!");
+  console.log(req.body.services);
   if (req.body.services) {
     tmpServices = req.body.services.map(element => {
       return {
-        _id: element.value,
+        serviceId: element.value,
         price: randomIntFromInterval(10, 100)
       };
     });
