@@ -21,6 +21,10 @@ const selectionObject = {
 
 router.get("/getDetails/:id", (req, res, next) => {
   User.findById(req.params.id)
+    .populate({
+      path: "services.serviceId",
+      model: "Services"
+    })
     .then(artist => {
       res.json(artist);
     })
@@ -185,9 +189,14 @@ router.get("/search", (req, res, next) => {
   console.log(searchString);
 
   User.find(searchString)
-    .populate("Services")
+    .populate({
+      path: "services.serviceId",
+      model: "Services"
+    })
     // .populate("comments")
-    .then(allArtistsFiltered => res.json(allArtistsFiltered))
+    .then(allArtistsFiltered => {
+      res.json(allArtistsFiltered);
+    })
     .catch(err => {
       console.log(err);
     });
