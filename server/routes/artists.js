@@ -93,7 +93,6 @@ router.put("/update", (req, res, next) => {
   let tmpServices;
   if (req.body.services) {
     tmpServices = req.body.services.map(element => {
-      console.log("vas a actualizar el servicio: " + element.value);
       return {
         _id: element.value,
         price: randomIntFromInterval(10, 100)
@@ -130,16 +129,11 @@ router.get("/search", (req, res, next) => {
 
   if (req.query.ranking) {
     if (req.query.ranking !== "0")
-      console.log("este es el ranking que vas a buscar: " + req.query.ranking);
-    searchString = { ...searchString, ranking: req.query.ranking };
-    console.log("resultado de clonado:");
-    console.log(searchString);
+      searchString = { ...searchString, ranking: req.query.ranking };
   }
 
   if (req.query.services) {
     let arrayservices = req.query.services.split(",");
-    console.log("arrayservices ANTES DE LA TRANSFORMACIÓN");
-    console.log(arrayservices);
 
     // let elementMatch = {
     //   $and: [
