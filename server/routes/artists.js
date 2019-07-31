@@ -28,9 +28,31 @@ router.post("/newcomment", (req, res, next) => {
     user: req.body.userID,
     artist: req.body.artistID
   }).then(newComment => {
-    Comment.findById(newComment._id)
-      .select(selectionObject)
-      .then(theNewComment => res.json(theNewComment));
+    console.log("INFO DEL COMENTARIO AGREGADO:");
+    console.log(newComment);
+    Comment.find({ artist: newComment.artist })
+      // .select({ valoration: true })
+      .then(allCommentOfThisArtist => {
+        console.log("comentarios del artista: ");
+        console.log(allCommentOfThisArtist);
+
+        let valorationAvg = allCommentOfThisArtist.reduce((prev, cur) => {
+          return prev + cur.valoration;
+        }, 0);
+
+        valorationAvg = Math.ceil(
+          valorationAvg / allCommentOfThisArtist.length
+        );
+        console.log("MEDIA DE OPINIONES!!");
+        console.log(valorationAvg);
+        User.findByIdAndUpdate(allCommentOfThisArtist[0].artist, {
+          ranking: valorationAvg
+        }).then(rankingUserUpdated => {
+          console.log("RAKING ACTUALIZADOO!!");
+          console.log(rankingUserUpdated);
+          res.json(rankingUserUpdated);
+        });
+      });
   });
 });
 
