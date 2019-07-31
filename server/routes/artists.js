@@ -21,17 +21,13 @@ const selectionObject = {
 };
 
 router.post("/newcomment", (req, res, next) => {
-  console.log("ENTRANDO EN EL NEWCOMMENT");
-  console.log(req.body);
   Comment.create({
     valoration: req.body.valoration,
     title: req.body.title,
     comment: req.body.comment,
-    user: req.body.username,
-    artist: req.body.artistname
+    user: req.body.userID,
+    artist: req.body.artistID
   }).then(newComment => {
-    console.log("COMENTARIO AÑADIDO!!!");
-    console.log(newComment);
     Comment.findById(newComment._id)
       .select(selectionObject)
       .then(theNewComment => res.json(theNewComment));

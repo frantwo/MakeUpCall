@@ -4,39 +4,51 @@ import Popularity from "../Popularity/Popularity";
 import Axios from "axios";
 
 export default class CommentNew extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       valoration: 0,
       title: "",
       comment: "",
-      username: undefined,
-      artistname: undefined
+      userID: "",
+      username: "",
+      artistID: ""
     };
   }
 
+  findDetails = () => {
+    Axios.get(
+      `${process.env.REACT_APP_URL}/artists/getDetails/${
+        this.props.match.params.id
+      }`
+    )
+      .then(artist => {
+        this.setState({
+          ...this.state,
+          artistname: artist.data.username,
+          userID: this.props.user._id,
+          artistID: this.props.match.params.id
+        });
+      })
+      .catch(err => console.log(err));
+  };
+
   componentDidMount() {
-    this.setState({
-      ...this.state,
-      username: this.props.user._id,
-      artistname: this.props.match.params.id
-    });
+    this.findDetails();
   }
 
   submitForm(e) {
     e.preventDefault();
-    debugger;
     let isFilledUser =
-      this.state.username !== undefined && this.state.username !== "";
+      this.state.userID !== undefined && this.state.userID !== "";
     let isFilledArtist =
-      this.state.artistname !== undefined && this.state.artistname !== "";
+      this.state.artistID !== undefined && this.state.artistID !== "";
     let isFilledTitle =
       this.state.title !== undefined && this.state.title !== "";
     let isFilledComment =
       this.state.comment !== undefined && this.state.comment !== "";
 
     if (isFilledUser && isFilledArtist && isFilledTitle && isFilledComment) {
-      console.log(`vas a ir a ${process.env.REACT_APP_URL}`);
       Axios.post(
         `${process.env.REACT_APP_URL}/artists/newcomment`,
         this.state
@@ -58,9 +70,9 @@ export default class CommentNew extends Component {
 
   render() {
     return (
-      <div>
-        <h1>USERNAME</h1>
-        <form>
+      <div className="comment-container">
+        <h1>{this.state.artistname}</h1>
+        <form className="form-opinion">
           <div className="ranking-content">
             <label>Vote: </label>
             <Popularity
@@ -71,6 +83,7 @@ export default class CommentNew extends Component {
             />
           </div>
           <input
+            className="field-opinion"
             type="text"
             name="title"
             onChange={e => {
@@ -79,11 +92,16 @@ export default class CommentNew extends Component {
             placeholder="Write here one title"
           />
           <textarea
+            className="field-opinion"
             name="comment"
             onChange={e => this.handleFormChange(e, "comment")}
             placeholder="Write here your comment"
+            rows="5"
+            cols="40"
           />
-          <button onClick={e => this.submitForm(e)}>Add comment</button>
+          <button className="btn-opinion" onClick={e => this.submitForm(e)}>
+            Add comment
+          </button>
         </form>
       </div>
     );
