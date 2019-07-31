@@ -28,8 +28,23 @@
   width: 100%;
   flex-direction: column;
 }
+.fieldset-details-wrapper label {
+  font-weight: bold;
+}
 .fields-details {
   width: 90%;
   font-size: 18px;
+  margin: 10px;
+}
+
+.container-pict {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.mini-pict {
+  width: 80px;
+  height: 80px;
   margin: 10px;
 }
