@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
+const Comment = require("../models/Comments");
 const bcrypt = require("bcrypt");
 const ObjectID = require("mongodb").ObjectID;
 // const mongo = require('mongodb'),
@@ -18,6 +19,24 @@ const selectionObject = {
   ranking: true,
   city: true
 };
+
+router.post("/newcomment", (req, res, next) => {
+  console.log("ENTRANDO EN EL NEWCOMMENT");
+  console.log(req.body);
+  Comment.create({
+    valoration: req.body.valoration,
+    title: req.body.title,
+    comment: req.body.comment,
+    user: req.body.username,
+    artist: req.body.artistname
+  }).then(newComment => {
+    console.log("COMENTARIO AÑADIDO!!!");
+    console.log(newComment);
+    Comment.findById(newComment._id)
+      .select(selectionObject)
+      .then(theNewComment => res.json(theNewComment));
+  });
+});
 
 router.get("/getDetails/:id", (req, res, next) => {
   User.findById(req.params.id)

@@ -11,6 +11,7 @@ import Home from "./components/Home/Home";
 import SearchArtist from "./components/SearchArtist/SearchArtist";
 import NavBarBeauty from "./components/BeautyNavBar/BeautyNavBar";
 import DetailsArtist from "./components/DetailsArtists/DetailsArtists";
+import CommentNew from "./components/CommentNew/CommentNew";
 
 class App extends Component {
   constructor(props) {
@@ -73,10 +74,11 @@ class App extends Component {
     console.log("AHORA ACTUALIZA LOS DATOS EN EL SERVIDOR!!!");
     console.log(useUpdated);
   };
-  ShowDetails(oneartist) {
-    this.setState({ ...this.state, oneartist: oneartist });
-    this.props.history.push("/details");
-  }
+
+  // ShowDetails(oneartist) {
+  //   this.setState({ ...this.state, oneartist: oneartist });
+  //   this.props.history.push("/details");
+  // }
 
   render() {
     if (this.state.loggedInUser) {
@@ -108,6 +110,17 @@ class App extends Component {
               path="/details/:id"
               render={props => (
                 <DetailsArtist {...props} artistinfo={this.state.oneartist} />
+              )}
+            />
+            <Route
+              exact
+              path="/newcomment/:id"
+              render={props => (
+                <CommentNew
+                  {...props}
+                  artist={this.state.oneartist}
+                  user={this.state.loggedInUser}
+                />
               )}
             />
           </Switch>

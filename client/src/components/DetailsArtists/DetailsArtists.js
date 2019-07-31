@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./DetailsArtists.css";
 import axios from "axios";
 import Comment from "../Comment/Comment";
+import { Link } from "react-router-dom";
 
 export default class DetailsArtists extends Component {
   constructor(props) {
@@ -78,6 +79,9 @@ export default class DetailsArtists extends Component {
           </fieldset>
           <br />
           <div className="comment-content">
+            <Link key="1" to={`/newcomment/${this.props.match.params.id}`}>
+              <button className="btn-write-comment">Write a comment</button>
+            </Link>
             <Comment
               user={"prueba"}
               valoration={1}
