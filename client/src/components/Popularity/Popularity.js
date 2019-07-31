@@ -41,7 +41,7 @@ export default class Popularity extends Component {
       case "noneditable":
         return (
           <div>
-            <div style={{ fontSize: 30 }}>
+            <div style={{ fontSize: 20 }}>
               <StarRatingComponent
                 name="app4"
                 editing={false}

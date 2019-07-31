@@ -41,67 +41,66 @@ export default class DetailsArtists extends Component {
 
   render() {
     return (
-      <div className="details-wrapper">
-        <div className="details-container">
-          <div className="info-container">
-            <h1>{this.state.artist.username} </h1>
-            <fieldset className="fieldset-details-wrapper">
-              <label>Email:</label>
-              <input
-                disabled
-                className="fields-details"
-                type="text"
-                value={this.state.artist.email}
-              />
-              <label>Ciudad:</label>
-              <input
-                disabled
-                className="fields-details"
-                type="text"
-                value={this.state.artist.city}
-              />
-              <label>Experiencia:</label>
-              <textarea
-                disabled
-                className="fields-details"
-                rows="5"
-                cols="10"
-                value={this.state.artist.experience}
-              />
-              <label>Servicios</label>
-              {this.state.artist.services.map((element, index) => {
-                return (
-                  <p key={index}>
-                    - {element.serviceId.name} ({element.price} €)
-                  </p>
-                );
-              })}
-            </fieldset>
-          </div>
-          <div className="pictures-container">
-            <h3>Works:</h3>
-            <div className="container-pict">
-              {this.state.artist.pictures.map((onepict, index) => {
-                return (
-                  <img
-                    className="mini-pict"
-                    key={onepict._id}
-                    src={onepict.photo_url}
-                    alt={onepict.photo_name}
-                  />
-                );
-              })}
-            </div>
+      <div className="details-container">
+        <div className="info-container">
+          <h1>{this.state.artist.username} </h1>
+          <fieldset className="fieldset-details-wrapper">
+            <label>Email:</label>
+            <input
+              disabled
+              className="fields-details"
+              type="text"
+              value={this.state.artist.email}
+            />
+            <label>Ciudad:</label>
+            <input
+              disabled
+              className="fields-details"
+              type="text"
+              value={this.state.artist.city}
+            />
+            <label>Experiencia:</label>
+            <textarea
+              disabled
+              className="fields-details"
+              rows="5"
+              cols="10"
+              value={this.state.artist.experience}
+            />
+            <label>Servicios</label>
+            {this.state.artist.services.map((element, index) => {
+              return (
+                <p key={index}>
+                  - {element.serviceId.name} ({element.price} €)
+                </p>
+              );
+            })}
+          </fieldset>
+          <br />
+          <div className="comment-content">
+            <Comment
+              user={"prueba"}
+              valoration={1}
+              creation_date={"10/10/2019"}
+              title={"primer comentario"}
+              comment={"fue uan pasada de servicio y repitiré"}
+            />
           </div>
         </div>
-        <div className="comment-content">
-          <Comment
-            user={"prueba"}
-            valoration={1}
-            creation_date={"10/10/2019"}
-            title={"primer comentario"}
-            comment={"fue uan pasada de servicio y repitiré"}
-          />
+        <div className="pictures-container">
+          <h3>Works:</h3>
+          <div className="container-pict">
+            {this.state.artist.pictures.map((onepict, index) => {
+              return (
+                <img
+                  className="mini-pict"
+                  key={onepict._id}
+                  src={onepict.photo_url}
+                  alt={onepict.photo_name}
+                />
+              );
+            })}
+          </div>
         </div>
       </div>
     );

@@ -1,0 +1,17 @@
+.name-of-user {
+  font-size: 14px;
+  margin: 5px;
+}
+
+.head-comment {
+  display: flex;
+  align-items: center;
+}
+
+.title-comment {
+  margin: 5px;
+}
+
+.description-comment {
+  width: 100%;
+}
