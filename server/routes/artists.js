@@ -20,6 +20,14 @@ const selectionObject = {
   city: true
 };
 
+router.get("/getcomments/:id", (req, res, next) => {
+  Comment.find({ artist: req.params.id })
+    .then(comments => {
+      res.json(comments);
+    })
+    .catch(err => console.log(err));
+});
+
 router.post("/newcomment", (req, res, next) => {
   Comment.create({
     valoration: req.body.valoration,

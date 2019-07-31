@@ -17,13 +17,32 @@ export default class DetailsArtists extends Component {
         experience: "",
         services: [],
         pictures: []
-      }
+      },
+      comments: []
     };
   }
 
   componentDidMount() {
     this.findDetails();
+    this.findComments();
   }
+
+  findComments = () => {
+    axios
+      .get(
+        `${process.env.REACT_APP_URL}/artists/getcomments/${
+          this.props.match.params.id
+        }`
+      )
+      .then(comments => {
+        console.log("ESTOS SON TODOS LOS COMENTARIOS:");
+        console.log(comments.data);
+        this.setState({
+          ...this.state,
+          comments: [...comments.data]
+        });
+      });
+  };
 
   findDetails = () => {
     axios
@@ -86,13 +105,27 @@ export default class DetailsArtists extends Component {
             <Link key="1" to={`/newcomment/${this.props.match.params.id}`}>
               <button className="btn-write-comment">Write a comment</button>
             </Link>
-            <Comment
+
+            {this.state.comments.map((element, index) => {
+              return (
+                <Comment
+                  key={index}
+                  user={element.user}
+                  valoration={element.valoration}
+                  creation_date={element.created_at}
+                  title={element.title}
+                  comment={element.comment}
+                />
+              );
+            })}
+
+            {/* <Comment
               user={"prueba"}
               valoration={1}
               creation_date={"10/10/2019"}
               title={"primer comentario"}
               comment={"fue uan pasada de servicio y repitiré"}
-            />
+            /> */}
           </div>
         </div>
         <div className="pictures-container">

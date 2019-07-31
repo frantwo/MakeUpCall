@@ -1,3 +1,6 @@
+.comment-wrapper {
+  margin: 10px;
+}
 .name-of-user {
   font-size: 14px;
   margin: 5px;
@@ -10,6 +13,7 @@
 
 .title-comment {
   margin: 5px;
+  font-size: 14px;
 }
 
 .description-comment {

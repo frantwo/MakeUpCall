@@ -28,13 +28,13 @@ export default class Comment extends Component {
   render() {
     return (
       <div className="comment-wrapper">
-        <h5 className="name-of-user">{this.state.user}</h5>
         <div className="head-comment">
+          <h5 className="name-of-user">{this.state.user}</h5>
           <Popularity mode="noneditable" value={this.state.ranking} />
-          <p className="title-comment">
-            ({this.state.created_date}) {this.state.title}
-          </p>
         </div>
+        <p className="title-comment">
+          ({this.state.created_date}) {this.state.title}
+        </p>
         <textarea
           className="description-comment"
           disabled
