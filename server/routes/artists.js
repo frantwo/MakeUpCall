@@ -81,16 +81,32 @@ router.delete("/delete/:artistID", (req, res) => {
     });
 });
 
+function randomIntFromInterval(min, max) {
+  // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 router.put("/update", (req, res, next) => {
   const salt = bcrypt.genSaltSync(10);
   const hashPass = bcrypt.hashSync(req.body.password, salt);
+
+  let tmpServices;
+  if (req.body.services) {
+    tmpServices = req.body.services.map(element => {
+      console.log("vas a actualizar el servicio: " + element.value);
+      return {
+        _id: element.value,
+        price: randomIntFromInterval(10, 100)
+      };
+    });
+  }
 
   User.findByIdAndUpdate(req.body._id, {
     username: req.body.username,
     password: hashPass,
     email: req.body.email,
     city: req.body.city,
-    services: req.body.services,
+    services: tmpServices,
     experience: req.body.experience
   })
     .then(updatedUser => {
@@ -108,14 +124,16 @@ router.put("/update", (req, res, next) => {
 
 router.get("/search", (req, res, next) => {
   let searchString = {};
-
   if (req.query.city) {
-    searchString.city = req.query.city;
+    searchString = { city: req.query.city };
   }
 
   if (req.query.ranking) {
     if (req.query.ranking !== "0")
-      searchString.ranking = Number(req.query.ranking);
+      console.log("este es el ranking que vas a buscar: " + req.query.ranking);
+    searchString = { ...searchString, ranking: req.query.ranking };
+    console.log("resultado de clonado:");
+    console.log(searchString);
   }
 
   if (req.query.services) {
@@ -145,7 +163,8 @@ router.get("/search", (req, res, next) => {
           "services._id": {
             $in: []
           }
-        }
+        },
+        { ...searchString }
         // {
         //   "services.price": { $gt: 10 }
         //   // "services.price": {
@@ -160,7 +179,8 @@ router.get("/search", (req, res, next) => {
 
     console.log("elementMatch");
     console.log(JSON.stringify(elementMatch));
-    searchString = elementMatch;
+
+    searchString = { ...elementMatch };
   }
 
   // searchString.services = arrayservices;

@@ -79,8 +79,6 @@ class App extends Component {
   }
 
   render() {
-    console.log("ENRUTADOR MÁS ENRUTADO");
-    console.log(this.state.oneartist);
     if (this.state.loggedInUser) {
       return (
         <React.Fragment>

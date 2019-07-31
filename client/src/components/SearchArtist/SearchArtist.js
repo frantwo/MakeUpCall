@@ -82,6 +82,8 @@ export default class SearchArtist extends Component {
 
       queryString = queryString.substring(1, queryString.length);
 
+      console.log("String de busqueda: " + queryString);
+
       Axios.get(baseURL + queryString).then(responseFromApi => {
         this.setState({
           ...this.state,
