@@ -54,7 +54,8 @@ export default class Profile extends Component {
         city: this.props.city,
         pictures: this.props.pictures
       },
-      allFormFilled: true
+      allFormFilled: true,
+      updatedFinished: false
     });
   }
 
@@ -101,6 +102,7 @@ export default class Profile extends Component {
       console.log(updatedUser);
       let newState = { ...this.state };
       newState.allFormFilled = true;
+      newState.updatedFinished = true;
       this.setState(newState);
     });
   }
@@ -195,6 +197,9 @@ export default class Profile extends Component {
           </form>
           {!this.state.allFormFilled && (
             <p className="error">You must fill all fields</p>
+          )}
+          {this.state.updatedFinished && (
+            <p className="updatedFinished">Updated finished succesfully!</p>
           )}
         </div>
         <div className="pictures-wrapper">
