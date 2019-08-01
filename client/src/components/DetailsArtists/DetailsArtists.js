@@ -79,7 +79,19 @@ export default class DetailsArtists extends Component {
             <Popularity mode="noneditable" value={this.state.artist.ranking} />
           </div>
           <fieldset className="fieldset-details-wrapper">
-            <label>Email:</label>
+            <div className="container-email">
+              <label>Email:</label>
+              <Link key="2" to={`/contact/${this.props.match.params.id}`}>
+                {this.props.userInfo && (
+                  <button className="btn-contact">Contact</button>
+                )}
+                {!this.props.userInfo && (
+                  <button disabled className="btn-contact">
+                    Contact
+                  </button>
+                )}
+              </Link>
+            </div>
             <input
               disabled
               className="fields-details"
@@ -113,7 +125,14 @@ export default class DetailsArtists extends Component {
           <br />
           <div className="comment-content">
             <Link key="1" to={`/newcomment/${this.props.match.params.id}`}>
-              <button className="btn-write-comment">Write a comment</button>
+              {this.props.userInfo && (
+                <button className="btn-write-comment">Write a comment</button>
+              )}
+              {!this.props.userInfo && (
+                <button disabled className="btn-write-comment">
+                  Write a comment
+                </button>
+              )}
             </Link>
 
             {this.state.comments.map((element, index) => {

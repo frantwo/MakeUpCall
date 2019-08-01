@@ -12,6 +12,7 @@ import SearchArtist from "./components/SearchArtist/SearchArtist";
 import NavBarBeauty from "./components/BeautyNavBar/BeautyNavBar";
 import DetailsArtist from "./components/DetailsArtists/DetailsArtists";
 import CommentNew from "./components/CommentNew/CommentNew";
+import FormEmail from "./components/FormEmail/FormEmail";
 
 class App extends Component {
   constructor(props) {
@@ -65,7 +66,7 @@ class App extends Component {
         this.setState({
           loggedInUser: response
         });
-        this.props.history.push("/");
+        // this.props.history.push("/");
       }
     });
   };
@@ -109,7 +110,11 @@ class App extends Component {
               exact
               path="/details/:id"
               render={props => (
-                <DetailsArtist {...props} artistinfo={this.state.oneartist} />
+                <DetailsArtist
+                  {...props}
+                  artistinfo={this.state.oneartist}
+                  userInfo={this.state.loggedInUser}
+                />
               )}
             />
             <Route
@@ -117,6 +122,17 @@ class App extends Component {
               path="/newcomment/:id"
               render={props => (
                 <CommentNew
+                  {...props}
+                  artist={this.state.oneartist}
+                  user={this.state.loggedInUser}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/contact/:id"
+              render={props => (
+                <FormEmail
                   {...props}
                   artist={this.state.oneartist}
                   user={this.state.loggedInUser}
@@ -163,7 +179,11 @@ class App extends Component {
               exact
               path="/details/:id"
               render={props => (
-                <DetailsArtist {...props} artistinfo={this.state.oneartist} />
+                <DetailsArtist
+                  {...props}
+                  artistinfo={this.state.oneartist}
+                  userInfo={this.state.loggedInUser}
+                />
               )}
             />
             <Route exact path="/" component={Home} />

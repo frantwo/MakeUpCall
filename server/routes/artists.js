@@ -4,6 +4,8 @@ const User = require("../models/User");
 const Comment = require("../models/Comments");
 const bcrypt = require("bcrypt");
 const ObjectID = require("mongodb").ObjectID;
+const nodemailer = require("nodemailer");
+
 // const mongo = require('mongodb'),
 // var ObjectID = mongo.ObjectID;
 const uploader = require("../configs/cloudinary-setup");
@@ -19,6 +21,59 @@ const selectionObject = {
   ranking: true,
   city: true
 };
+
+const transporter = nodemailer.createTransport({
+  service: "Gmail",
+  auth: {
+    user: process.env.emailAccount,
+    pass: process.env.emailPwd
+  }
+});
+
+router.post("/contact", (req, res, next) => {
+  User.findById(req.body.artistID)
+    .populate({
+      path: "services.serviceId",
+      model: "Services"
+    })
+    .then(artist => {
+      transporter
+        .sendMail({
+          from: `"MakeUpCall 💇🏽 💇🏽‍💅🏽<${req.body.emailUser}>`,
+          to: `${artist.email}`,
+          subject: `${req.body.subject}`,
+          text: `${req.body.textEmail}`,
+          html: `<!DOCTYPE html>
+      <html lang="en">
+      
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>${req.body.subject}</title>
+        <link rel="stylesheet" href="/stylesheets/style.css" />
+      </head>
+      
+      <body>
+        <title> CONFIRMATION EMAIL </title>
+        <h1> ¡ESTÁN INTERESADOS EN TU TRABAJO! </h1>
+        <img src="https://media.giphy.com/media/qJsJI0MhazjGw/source.gif"
+          alt="" height="auto">
+          <br/>
+          <h2>${req.body.textEmail}</h2>
+          
+        <h3><a href="mailto:${
+          req.body.emailUser
+        }?Subject=Thanks!" target="_top">Responder al email</a></h3>
+      </body>
+      
+      </html>`
+        })
+        .then(info => res.json({ emailSent: true }))
+        .catch(error => console.log(error));
+    })
+    .catch(err => console.log(err));
+});
 
 router.get("/getcomments/:id", (req, res, next) => {
   Comment.find({ artist: req.params.id })

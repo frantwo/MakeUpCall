@@ -1,0 +1,41 @@
+.email-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.email-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  font-size: 18px;
+}
+
+.email-field {
+  font-size: 18px;
+  margin: 5px;
+}
+
+.btn-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+}
+
+.btn-email {
+  font-size: 18px;
+  width: 25%;
+}
+
+.email-sent {
+  color: green;
+  font-size: 18px;
+}
+
+.email-fields-not-filled {
+  color: red;
+  font-size: 18px;
+}
