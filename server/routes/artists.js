@@ -31,20 +31,15 @@ const transporter = nodemailer.createTransport({
 });
 
 router.post("/contact", (req, res, next) => {
-  console.log("ESTOY EN LA API DE CONTACT!");
-  console.log(req.body);
   User.findById(req.body.artistID)
     .populate({
       path: "services.serviceId",
       model: "Services"
     })
     .then(artist => {
-      console.log("HE ENCONTRADO EL USER!");
-      console.log(artist);
-      console.log(req.body);
       transporter
         .sendMail({
-          from: `"MakeUpCall 👻<${req.body.emailUser}>`,
+          from: `"MakeUpCall 💇🏽 💇🏽‍💅🏽<${req.body.emailUser}>`,
           to: `${artist.email}`,
           subject: `${req.body.subject}`,
           text: `${req.body.textEmail}`,

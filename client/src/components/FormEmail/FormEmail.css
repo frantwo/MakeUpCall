@@ -34,3 +34,8 @@
   color: green;
   font-size: 18px;
 }
+
+.email-fields-not-filled {
+  color: red;
+  font-size: 18px;
+}

@@ -13,18 +13,25 @@ export default class FormEmail extends Component {
       emailUser: "",
       subject: "",
       textEmail: "",
-      emailSentSucess: false
+      emailSentSucess: false,
+      allFieldsFilled: true
     };
   }
 
   sendEmail(e) {
     e.preventDefault();
-    console.log("voy a acceder a la api");
-    console.log(
-      `${process.env.REACT_APP_URL}/artists/contact/${
-        this.props.match.params.id
-      }`
-    );
+
+    if (
+      this.state.subject === "" ||
+      this.state.textEmail === "" ||
+      this.state.emailUser === ""
+    ) {
+      let newState = { ...this.state };
+      newState.allFieldsFilled = false;
+
+      return this.setState(newState);
+    }
+
     axios
       .post(`${process.env.REACT_APP_URL}/artists/contact`, this.state)
       .then(emailResponse => {
@@ -59,6 +66,7 @@ export default class FormEmail extends Component {
     let newState = { ...this.state };
     newState[field] = e.target.value;
     newState["emailSentSucess"] = false;
+    newState["allFieldsFilled"] = true;
     this.setState(newState);
   }
 
@@ -104,6 +112,11 @@ export default class FormEmail extends Component {
             </button>
             {this.state.emailSentSucess && (
               <p className="email-sent">Email sent succesfully!</p>
+            )}
+            {!this.state.allFieldsFilled && (
+              <p className="email-fields-not-filled">
+                Must be filled all fields!
+              </p>
             )}
           </div>
         </form>
