@@ -9,8 +9,14 @@ export default class ListOfCards extends Component {
       <div className="wrapper-cards">
         {this.props.listofartists.map((oneartist, index) => {
           if (oneartist.role === "Artist") {
+            console.log("INFO DEL ARTISTA QUE ENVIO A LA CARTA");
+            console.log(oneartist);
             return (
-              <Link key={oneartist._id} to={`/details/${oneartist._id}`}>
+              <Link
+                className="artist-card"
+                key={oneartist._id}
+                to={`/details/${oneartist._id}`}
+              >
                 <ArtistCard
                   name={oneartist.username}
                   artistPict={oneartist.pictures[0]}

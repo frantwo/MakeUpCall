@@ -43,3 +43,10 @@ img {
   background: white;
   resize: horizontal;
 }
+.name-artist {
+  font-weight: bold;
+}
+.services-artist {
+  font-size: 10px;
+  margin: 5px;
+}

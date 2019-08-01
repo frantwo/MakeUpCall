@@ -97,7 +97,10 @@ router.post("/pictures/create", (req, res, next) => {
 
 router.get("/list", (req, res, next) => {
   User.find({})
-    .populate("Services")
+    .populate({
+      path: "services.serviceId",
+      model: "Services"
+    })
     .then(artist => {
       res.json(artist);
     })
