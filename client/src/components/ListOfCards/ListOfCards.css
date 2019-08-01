@@ -15,8 +15,8 @@
 
 .artist-card {
   display: flex;
-
   text-decoration: none;
   color: black;
   font-weight: normal;
+  height: 355px;
 }

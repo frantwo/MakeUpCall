@@ -148,7 +148,7 @@ class App extends Component {
               path="/signup"
               render={() => <Signup {...this.state.loggedInUser} />}
             />
-            <Route
+            {/* <Route
               exact
               path="/search"
               render={() => (
@@ -157,7 +157,8 @@ class App extends Component {
                   getUser={this.getTheUser}
                 />
               )}
-            />
+            /> */}
+            <Route exact path="/search" render={() => <SearchArtist />} />
             <Route
               exact
               path="/details/:id"

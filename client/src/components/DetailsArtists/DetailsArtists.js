@@ -4,6 +4,7 @@ import axios from "axios";
 import Comment from "../Comment/Comment";
 import { Link } from "react-router-dom";
 import Popularity from "../Popularity/Popularity";
+import moment from "moment";
 
 export default class DetailsArtists extends Component {
   constructor(props) {
@@ -24,7 +25,6 @@ export default class DetailsArtists extends Component {
 
   componentDidMount() {
     this.findDetails();
-    this.findComments();
   }
 
   findComments = () => {
@@ -35,11 +35,20 @@ export default class DetailsArtists extends Component {
         }`
       )
       .then(comments => {
-        console.log("ESTOS SON TODOS LOS COMENTARIOS:");
-        console.log(comments.data);
+        let newStateComments = comments.data.map(element => {
+          return {
+            username: element.user.username,
+            creationDate: moment(element.created_at).format(
+              "YYYY-MM-DD HH:mm:ss"
+            ),
+            valoration: element.valoration,
+            title: element.title,
+            comment: element.comment
+          };
+        });
         this.setState({
           ...this.state,
-          comments: [...comments.data]
+          comments: [...newStateComments]
         });
       });
   };
@@ -56,6 +65,7 @@ export default class DetailsArtists extends Component {
           ...this.state,
           artist: artist.data
         });
+        this.findComments();
       })
       .catch(err => console.log(err));
   };
@@ -110,22 +120,14 @@ export default class DetailsArtists extends Component {
               return (
                 <Comment
                   key={index}
-                  user={element.user}
+                  user={element.username}
                   valoration={element.valoration}
-                  creation_date={element.created_at}
+                  creation_date={element.creationDate}
                   title={element.title}
                   comment={element.comment}
                 />
               );
             })}
-
-            {/* <Comment
-              user={"prueba"}
-              valoration={1}
-              creation_date={"10/10/2019"}
-              title={"primer comentario"}
-              comment={"fue uan pasada de servicio y repitiré"}
-            /> */}
           </div>
         </div>
         <div className="pictures-container">

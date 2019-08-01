@@ -13,14 +13,12 @@ export default class ArtistCard extends Component {
         <div className="container-card">
           <h4 className="name-artist">{this.props.name}</h4>
           {this.props.services.map((service, index) => {
-            console.log(service);
             return (
               <p key={index} className="services-artist">
                 - {service.serviceId.name}
               </p>
             );
           })}
-          {/* <p className="experience">{this.props.experience}</p> */}
         </div>
       </div>
     );

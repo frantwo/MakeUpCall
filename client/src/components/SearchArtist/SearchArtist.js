@@ -84,8 +84,6 @@ export default class SearchArtist extends Component {
 
       queryString = queryString.substring(1, queryString.length);
 
-      console.log("String de busqueda: " + baseURL + queryString);
-
       Axios.get(baseURL + queryString).then(responseFromApi => {
         this.setState({
           ...this.state,
@@ -109,7 +107,6 @@ export default class SearchArtist extends Component {
   }
 
   PriceSelected(value) {
-    console.log(this.state.listOfArtist);
     this.setState({ ...this.state, price: value });
   }
 

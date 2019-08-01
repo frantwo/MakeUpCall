@@ -23,7 +23,6 @@ export default class BeautyNavBar extends Component {
         </div>
 
         <div>
-          {this.props.infouser && console.log(this.props.infouser.role)}
           {this.props.infouser && (
             <ul className="navbar-top-right">
               <li>
