@@ -7,7 +7,7 @@ const commentsSchema = new Schema(
     title: String,
     comment: String,
     user: { type: Schema.Types.ObjectId, ref: "User" },
-    artist: { type: Schema.Types.ObjectId, ref: "Artist" }
+    artist: { type: Schema.Types.ObjectId, ref: "User" }
   },
   {
     timestamps: {

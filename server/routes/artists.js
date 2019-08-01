@@ -22,6 +22,16 @@ const selectionObject = {
 
 router.get("/getcomments/:id", (req, res, next) => {
   Comment.find({ artist: req.params.id })
+    .populate([
+      {
+        path: "user",
+        model: "User"
+      },
+      {
+        path: "artist",
+        model: "User"
+      }
+    ])
     .then(comments => {
       res.json(comments);
     })
@@ -97,7 +107,10 @@ router.post("/pictures/create", (req, res, next) => {
 
 router.get("/list", (req, res, next) => {
   User.find({})
-    .populate("Services")
+    .populate({
+      path: "services.serviceId",
+      model: "Services"
+    })
     .then(artist => {
       res.json(artist);
     })
@@ -191,7 +204,7 @@ router.get("/search", (req, res, next) => {
     let elementMatch = {
       $and: [
         {
-          "services._id": {
+          "services.serviceId": {
             $in: []
           }
         },
@@ -205,7 +218,7 @@ router.get("/search", (req, res, next) => {
       ]
     };
     arrayservices.forEach(element => {
-      return elementMatch["$and"][0]["services._id"]["$in"].push(element);
+      return elementMatch["$and"][0]["services.serviceId"]["$in"].push(element);
     });
 
     console.log("elementMatch");

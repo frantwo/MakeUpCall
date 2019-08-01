@@ -10,7 +10,11 @@ export default class ListOfCards extends Component {
         {this.props.listofartists.map((oneartist, index) => {
           if (oneartist.role === "Artist") {
             return (
-              <Link key={oneartist._id} to={`/details/${oneartist._id}`}>
+              <Link
+                className="artist-card"
+                key={oneartist._id}
+                to={`/details/${oneartist._id}`}
+              >
                 <ArtistCard
                   name={oneartist.username}
                   artistPict={oneartist.pictures[0]}

@@ -84,12 +84,10 @@ export default class SearchArtist extends Component {
 
       queryString = queryString.substring(1, queryString.length);
 
-      console.log("String de busqueda: " + queryString);
-
       Axios.get(baseURL + queryString).then(responseFromApi => {
         this.setState({
           ...this.state,
-          listOfArtist: responseFromApi.data,
+          listOfArtist: [...responseFromApi.data],
           resultsOfFilter: responseFromApi.data.length
         });
       });
@@ -109,7 +107,6 @@ export default class SearchArtist extends Component {
   }
 
   PriceSelected(value) {
-    console.log(this.state.listOfArtist);
     this.setState({ ...this.state, price: value });
   }
 
@@ -139,13 +136,14 @@ export default class SearchArtist extends Component {
               AllServices={this.state.listOfServices}
               filterService={e => this.ServiceSelected(e)}
             />
+            <br />
             <button onClick={e => this.filterResults(e)}>SEARCH</button>
 
-            <div className="order-by-price" />
+            {/* <div className="order-by-price" />
             <Price
               filterPrice={e => this.PriceSelected(e)}
               value={this.props.price}
-            />
+            /> */}
             <p> {this.state.resultsOfFilter} results</p>
           </div>
           <div className="results-of-search">
