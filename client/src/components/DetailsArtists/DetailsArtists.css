@@ -37,6 +37,15 @@
   width: 100%;
   flex-direction: column;
 }
+.container-email {
+  display: flex;
+  align-items: center;
+}
+
+.btn-contact {
+  margin-left: 10px;
+}
+
 .fieldset-details-wrapper label {
   font-weight: bold;
 }
