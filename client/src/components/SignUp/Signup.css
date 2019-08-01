@@ -94,3 +94,8 @@
   border-radius: 50%;
   background: white;
 }
+
+.account-created-success {
+  font-size: 18px;
+  color: green;
+}

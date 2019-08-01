@@ -6,7 +6,13 @@ import "./Signup.css";
 export default class Signup extends Component {
   constructor(props) {
     super(props);
-    this.state = { username: "", password: "", role: "", email: "" };
+    this.state = {
+      username: "",
+      password: "",
+      role: "User",
+      email: "",
+      createdSucess: false
+    };
     this.service = new AuthServices();
   }
 
@@ -24,7 +30,8 @@ export default class Signup extends Component {
           username: "",
           password: "",
           email: "",
-          role: ""
+          role: "",
+          createdSucess: true
         });
         // this.props.getUser(response)
       })
@@ -96,6 +103,12 @@ export default class Signup extends Component {
             Already have account?
             <Link to={"/login"}> Login</Link>
           </p>
+          <br />
+          {this.state.createdSucess && (
+            <p className="account-created-success">
+              Account created succesfully!
+            </p>
+          )}
         </div>
       </React.Fragment>
     );
