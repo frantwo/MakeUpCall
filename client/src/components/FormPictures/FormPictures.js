@@ -9,7 +9,8 @@ export default class FormPictures extends Component {
       photo_name: "",
       photo_url: "",
       userID: "",
-      avoidAddPict: false
+      avoidAddPict: false,
+      pictureUpdated: false
     };
     this.service = new service();
   }
@@ -33,7 +34,11 @@ export default class FormPictures extends Component {
       .then(response => {
         console.log("response is: ", response);
         // after the console.log we can see that response carries 'secure_url' which we can use to update the state
-        this.setState({ photo_url: response.secure_url, avoidAddPict: true });
+        this.setState({
+          photo_url: response.secure_url,
+          avoidAddPict: true,
+          pictureUpdated: false
+        });
       })
       .catch(err => {
         console.log("Error while uploading the file: ", err);
@@ -49,7 +54,7 @@ export default class FormPictures extends Component {
       .then(res => {
         console.log("added: ", res);
         // here you would redirect to some other page
-        this.setState({ avoidAddPict: false });
+        this.setState({ avoidAddPict: false, pictureUpdated: true });
       })
       .catch(err => {
         console.log("Error while adding the thing: ", err);
@@ -85,6 +90,9 @@ export default class FormPictures extends Component {
           >
             Add new picture
           </button>
+          {this.state.pictureUpdated && (
+            <p className="updatedFinished">Picture added succesfully!</p>
+          )}
         </form>
       </React.Fragment>
     );

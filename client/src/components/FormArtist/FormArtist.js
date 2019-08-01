@@ -199,7 +199,7 @@ export default class Profile extends Component {
             <p className="error">You must fill all fields</p>
           )}
           {this.state.updatedFinished && (
-            <p className="updatedFinished">Updated finished succesfully!</p>
+            <p className="updatedFinished">Update finished succesfully!</p>
           )}
         </div>
         <div className="pictures-wrapper">
