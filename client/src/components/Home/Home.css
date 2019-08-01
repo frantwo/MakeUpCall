@@ -3,6 +3,37 @@
   margin: 0;
 }
 .backgroundPict {
+  position: relative;
   width: 100vw;
   height: 75vh;
+}
+.text-intro {
+  top: 25vh;
+  left: 5vw;
+  width: 25vw;
+  font-size: 25px;
+  position: absolute;
+  animation: intro-animated 3s;
+  transition: all 1s ease-in-out;
+  color: black;
+  padding: 20px;
+  background-image: radial-gradient(rgba(255, 255, 255, 1), rgba(0, 0, 0, 0));
+  /* background-image: linear-gradient(
+    to right,
+    rgb(255, 255, 255, 0),
+    rgba(0, 0, 0, 1)
+  ); */
+  border-radius: 35px 0px 35px 0px;
+  -moz-border-radius: 35px 0px 35px 0px;
+  -webkit-border-radius: 35px 0px 35px 0px;
+  border: 2px solid #000205;
+}
+
+@keyframes intro-animated {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
