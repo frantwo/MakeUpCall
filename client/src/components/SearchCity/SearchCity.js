@@ -26,6 +26,9 @@ export default class SearchCity extends Component {
   }
 
   handleChange(selectedOption) {
+    if (selectedOption == null) {
+      selectedOption = { value: "", label: "" };
+    }
     this.props.filterCity(selectedOption);
     this.setState({ selectedValue: selectedOption.value });
   }
@@ -38,6 +41,7 @@ export default class SearchCity extends Component {
         )}
         onChange={e => this.handleChange(e)}
         options={this.options}
+        isClearable={true}
         placeholder="Select the city"
       />
     );

@@ -138,7 +138,6 @@ export default class SearchArtist extends Component {
             />
             <br />
             <button onClick={e => this.filterResults(e)}>SEARCH</button>
-
             {/* <div className="order-by-price" />
             <Price
               filterPrice={e => this.PriceSelected(e)}
